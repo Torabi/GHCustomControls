@@ -1,0 +1,24 @@
+
+*.dll
+
+*.pdb
+
+*.cache
+
+obj/7 Release/
+
+*.CopyComplete
+
+*.baml
+
+obj/7 Debug/GHCustomControls.csproj.FileListAbsolute.txt
+
+obj/7 Debug/GHCustomControls.g.resources
+
+obj/7 Debug/GHCustomControls_MarkupCompile.lref
+
+obj/7 Debug/NumericUpDownWindow.g.cs
+
+obj/7 Debug/NumericUpDownWindow.g.i.cs
+
+obj/7 Debug/GHCustomControls.Properties.Resources.resources
