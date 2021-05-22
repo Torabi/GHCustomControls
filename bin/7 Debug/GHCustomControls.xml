@@ -84,6 +84,33 @@
             <param name="path">path to the control</param>
             <returns></returns>
         </member>
+        <member name="M:GHCustomControls.GHCustomComponent.GetImage(System.String)">
+            <summary>
+            Rerun an image by its path.
+            </summary>
+            <param name="path">Path to your image : FLODER.IMAGENAME</param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.GHCustomComponent.GetBitmap(System.String)">
+            <summary>
+            Return an icon by its path. 
+            </summary>
+            <param name="path">Path to your icon : FLODER.ICONNAME</param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.GHCustomComponent.ToInternalUnits(System.Double)">
+            <summary>
+            converts the given value from millimeter to internal units
+            </summary>
+            <param name="mm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.GHCustomComponent.NumDecimals">
+            <summary>
+            return the number of decimals which at least can represent millimiter in any unit system
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:GHCustomControls.GHParameter.DataType">
             <summary>
             type of the data stored in parameter

@@ -70,6 +70,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GH_IO">
+      <HintPath>..\..\..\..\Users\Ali\.nuget\packages\grasshopper\7.4.21078.1001\lib\net45\GH_IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <HintPath>..\..\..\..\Users\Ali\.nuget\packages\grasshopper\7.4.21078.1001\lib\net45\Grasshopper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -84,14 +92,6 @@
     <Reference Include="RhinoCommon">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\System\rhinocommon.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Grasshopper">
-      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GH_IO">
-      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />

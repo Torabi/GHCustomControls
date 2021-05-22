@@ -2,9 +2,13 @@
 using GH_IO.Types;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
+using Rhino;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 /*
@@ -177,8 +181,61 @@ namespace GHCustomControls
             return base.Read(reader);
         }
 
+
         #endregion
 
+
+        #region Helper methods 
+        /// <summary>
+        /// Rerun an image by its path.
+        /// </summary>
+        /// <param name="path">Path to your image : FLODER.IMAGENAME</param>
+        /// <returns></returns>
+        public Image GetImage(string path)
+        {
+
+            Assembly myAssembly = this.GetType().Assembly;
+            string title = myAssembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+            Stream myStream = myAssembly.GetManifestResourceStream($"{title}.{path}");
+            if (myStream == null)
+                return null;
+            return Image.FromStream(myStream);
+        }
+        /// <summary>
+        /// Return an icon by its path. 
+        /// </summary>
+        /// <param name="path">Path to your icon : FLODER.ICONNAME</param>
+        /// <returns></returns>
+        public Bitmap GetBitmap(string path)
+        {
+
+            Assembly myAssembly = this.GetType().Assembly;
+            string title = myAssembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+            Stream myStream = myAssembly.GetManifestResourceStream($"{title}.{path}" );
+            if (myStream == null)
+                return null;
+            return new Bitmap(myStream);
+        }
+
+        /// <summary>
+        /// converts the given value from millimeter to internal units
+        /// </summary>
+        /// <param name="mm"></param>
+        /// <returns></returns>
+        public static double ToInternalUnits(double mm)
+        {
+
+            return RhinoMath.UnitScale(UnitSystem.Millimeters, Rhino.RhinoDoc.ActiveDoc.ModelUnitSystem) * mm;
+        }
+        /// <summary>
+        /// return the number of decimals which at least can represent millimiter in any unit system
+        /// </summary>
+        /// <returns></returns>
+        public static int NumDecimals()
+        {
+            return Math.Max(Convert.ToInt32(-Math.Log10(ToInternalUnits(1))), 0);
+        }
+        #endregion
 
     }
 }
