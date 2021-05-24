@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -27,7 +28,7 @@ namespace GHCustomControls
     {
         
         public HorizontalSliderInteger(string name,string description,int value,int min,int max,string suffix = "", bool showTitle = true) 
-            : base(name, description, value, min, max,showTitle, "", suffix) { }
+            : base(name, description, value, min, max,showTitle, "",0, suffix) { }
         public override GH_Types DataType => GH_Types.gh_int32 ;
 
         public override GH_ParamAccess Access =>  GH_ParamAccess.item;
@@ -89,10 +90,12 @@ namespace GHCustomControls
             if (result.HasFlag(GHMouseEventResult.Handled))
                 return;
             int d = (int)CurrentValue;
-            NumericUpDownData<int> numeric = new NumericUpDownData<int>(d,(int) _min,(int) _max, FormatString);
-            if (numeric.GetInput(PointToScreen(sender, Pos) , out int val))
+            //NumericUpDownData<int> numeric = new NumericUpDownData<int>(d,(int) _min,(int) _max, FormatString);
+            IntegerNumber number = new IntegerNumber((int)CurrentValue,(int)_min,(int) _max);
+            //if (numeric.GetInput(PointToScreen(sender, Pos) , out int val))
+            if (Helpers.GetIntegerInput(PointToScreen(sender, Pos),number))
             {
-                CurrentValue = val;
+                CurrentValue = number.Value;
                 result = result | GHMouseEventResult.UpdateSolution | GHMouseEventResult.Handled;
             }
             else

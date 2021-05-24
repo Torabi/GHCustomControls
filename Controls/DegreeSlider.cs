@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -247,10 +248,12 @@ namespace GHCustomControls
             if (_square.Contains(e.CanvasLocation))
             {
                 decimal d = Convert.ToDecimal(CurrentValue);
-                NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal(_min), Convert.ToDecimal(_max),"");
-                if (numeric.GetInput(PointToScreen(sender, center), out decimal val))
+                //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal(_min), Convert.ToDecimal(_max),"");
+                FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, 1, 1);
+                //if (numeric.GetInput(PointToScreen(sender, center), out decimal val))
+                if (Helpers.GetFloatInput(PointToScreen(sender, center),number))
                 {
-                    CurrentValue = (float)val;
+                    CurrentValue = number.Value;
                     result = result | GHMouseEventResult.UpdateSolution | GHMouseEventResult.Handled;
                 }
                 else

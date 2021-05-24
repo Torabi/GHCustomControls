@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -22,36 +23,41 @@ all copies or substantial portions of the Software.
 */
 namespace GHCustomControls
 {
-    public class HorizontalSliderDouble : HorizontalSlider
+    public class HorizontalSliderFloat : HorizontalSlider
     {
-       
-       
-        
-        public HorizontalSliderDouble(string title,string description,double val,float min,float max, int decimals, string suffix="", bool showTitle = true) : base(title, description,val,min,max,showTitle,$"N{decimals}", suffix) 
+
+        /// <summary>
+        /// number of decimals in text formatting
+        /// </summary>
+ 
+        public HorizontalSliderFloat(string title,string description,float val,float min,float max, int decimals=2, string suffix="", bool showTitle = true) : base(title, description,val,min,max,showTitle,$"F{decimals}",decimals,suffix) 
         {
- 
-            CurrentValue = val;    
+  
+            CurrentValue = val;
+         
         }
- 
+     
 
 
-        public override GH_Types DataType => GH_Types.gh_double;
+
+
+        public override GH_Types DataType => GH_Types.gh_decimal;
         public override GH_ParamAccess Access => GH_ParamAccess.item;
 
         public override string GetValueAsString(float x)
         {
-            double v = _min + x * (_max - _min);
+            float v = _min + x * (_max - _min);
             return v.ToString(FormatString) + Suffix;
         }
 
         public override void UpdatePos()
         {
-            X = GetPos(Convert.ToSingle( CurrentValue));
+           X = GetPos((float)CurrentValue);
         }
 
         public override void UpdateValue()
         {
-            CurrentValue = (double)GetCurrentValue();
+            CurrentValue = GetCurrentValue();
         }
 
         internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
@@ -59,13 +65,13 @@ namespace GHCustomControls
             base.MouseRightClick(sender, customComponent, e, ref result);
             if (result.HasFlag(GHMouseEventResult.Handled))
                 return;
-            double d = (double)CurrentValue;
-            NumericUpDownData<double> numeric = new NumericUpDownData<double>(d, _min, _max,FormatString);
-
-            //float s = GH_FontServer.MeasureString("A", SmallFont).Height * sender.Viewport.Zoom / 20;
-            if (numeric.GetInput(PointToScreen(sender,Pos),  out double val))
+            decimal d = Convert.ToDecimal(CurrentValue);
+            //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal( _min),Convert.ToDecimal( _max),FormatString);
+            FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, (_max - _min) / 100, _decimals);
+            //if (numeric.GetInput(PointToScreen(sender,Pos), out decimal val))
+            if (Helpers.GetFloatInput(PointToScreen(sender, Pos),number))
             {
-                CurrentValue = val;
+                CurrentValue = number.Value;
                 result = result | GHMouseEventResult.UpdateSolution | GHMouseEventResult.Handled;
             }
             else

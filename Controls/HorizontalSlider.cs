@@ -28,9 +28,12 @@ namespace GHCustomControls
         internal int _fontSize ;
         internal float _min;
         internal float _max;
+        internal int _decimals;
+        
         bool _showTitle;
 
         internal string FormatString;
+
         internal string Suffix;
         /// <summary>
         /// the rectangle host the slider grip
@@ -95,7 +98,7 @@ namespace GHCustomControls
         StringFormat _format;
 
         internal float _radius=6;
-        protected HorizontalSlider(string name,string description, object value, float min,float max,bool showTitle, string formatString,string suffix, Bitmap toolTipDiagram = null) :base(name,description,value,toolTipDiagram)
+        protected HorizontalSlider(string name,string description, object value, float min,float max,bool showTitle, string formatString,int decimals,string suffix, Bitmap toolTipDiagram = null) :base(name,description,value,toolTipDiagram)
         {
            
             _format = new StringFormat();
@@ -105,6 +108,7 @@ namespace GHCustomControls
             _min = min;
             _max = max;
             FormatString = formatString;
+            _decimals = decimals;
             Suffix = suffix;
             _showTitle = showTitle;
             _fontSize = GH_FontServer.MeasureString(Name, StandardFont).Height;

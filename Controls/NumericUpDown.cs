@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Timers;
+using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -158,16 +159,23 @@ namespace GHCustomControls
             if (!attributes.ContentBox.IsEmpty && (int)e.Value == 0) // on muse up
             {
 
-                T d = (T)CurrentValue;
-                NumericUpDownData<T> numeric = new NumericUpDownData<T>(d, _min, _max, FormatString);
+                //T d = (T)CurrentValue;
+                //NumericUpDownData<T> numeric = new NumericUpDownData<T>(d, _min, _max, FormatString);
 
-                //float s = GH_FontServer.MeasureString("A", SmallFont).Height * sender.Viewport.Zoom / 20;
-                if (numeric.GetInput(PointToScreen(Grasshopper.Instances.ActiveCanvas, new PointF((_label.Bounds.Left + _label.Bounds.Right) / 2, _label.Bounds.Top)), out T val))
+                GenericNumber<T> number = new GenericNumber<T>((T)CurrentValue, Min, Max, (T)Convert.ChangeType( 1,typeof(T)), 2);
+                if (Helpers.GetInput<T>(PointToScreen(Grasshopper.Instances.ActiveCanvas, new PointF((_label.Bounds.Left + _label.Bounds.Right) / 2, _label.Bounds.Top)),number))
                 {
-                    CurrentValue = val;
+                    CurrentValue = number.Value;
                     _label.Text = AsString(CurrentValue);
                     attributes.Owner.ExpireSolution(true);
                 }
+                ////float s = GH_FontServer.MeasureString("A", SmallFont).Height * sender.Viewport.Zoom / 20;
+                //if (numeric.GetInput(PointToScreen(Grasshopper.Instances.ActiveCanvas, new PointF((_label.Bounds.Left + _label.Bounds.Right) / 2, _label.Bounds.Top)), out T val))
+                //{
+                //    CurrentValue = val;
+                //    _label.Text = AsString(CurrentValue);
+                //    attributes.Owner.ExpireSolution(true);
+                //}
 
             }
         }

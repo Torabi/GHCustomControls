@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -41,7 +42,7 @@ namespace GHCustomControls
         /// <param name="max"></param>
         /// <param name="decimals"></param>
         /// <param name="suffix"></param>
-        public HorizontalSliderPercentage(string title, string description, float value,float min=0,float max=1, int decimals = 0, string suffix="", bool showTitle = true) : base(title, description, value, min, max,showTitle,$"P{decimals}",suffix)
+        public HorizontalSliderPercentage(string title, string description, float value,float min=0,float max=1, int decimals = 0, string suffix="", bool showTitle = true) : base(title, description, value, min, max,showTitle,$"P{decimals}",decimals,suffix)
         {
   
 
@@ -103,11 +104,13 @@ namespace GHCustomControls
             base.MouseRightClick(sender, customComponent, e, ref result);
             if (result.HasFlag(GHMouseEventResult.Handled))
                 return;
-            decimal d = Convert.ToDecimal(CurrentValue);
-            NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal( _min), Convert.ToDecimal(_max),FormatString);
-            if (numeric.GetInput(PointToScreen(sender, Pos), out decimal val))
+            
+            FloatNumber number = new FloatNumber((float)CurrentValue*100, _min*100, _max*100, (_max - _min) / 100, _decimals);
+            //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal( _min), Convert.ToDecimal(_max),FormatString);
+            //if (numeric.GetInput(PointToScreen(sender, Pos), out decimal val))
+            if (Helpers.GetFloatInput(PointToScreen(sender, Pos),number))
             {
-                CurrentValue = ((float) val);
+                CurrentValue = number.Value/100;
                 result = result | GHMouseEventResult.UpdateSolution | GHMouseEventResult.Handled;
             }
             else

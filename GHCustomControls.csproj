@@ -95,59 +95,47 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Endoskeleton\packages\Package.1.0.0\lib\net48\WPFNumericUpDown.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckBox.cs" />
-    <Compile Include="DegreeSlider.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\DegreeSlider.cs" />
     <Compile Include="GHCustomAttributes.cs" />
     <Compile Include="GHCustomComponent.cs" />
     <Compile Include="GHCustomControl.cs" />
     <Compile Include="GHParameter.cs" />
-    <Compile Include="Group.cs" />
+    <Compile Include="Controls\Group.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="HorizontalSliderFloat.cs" />
-    <Compile Include="HorizontalSliderDouble.cs" />
-    <Compile Include="HorizontalSliderInteger.cs" />
-    <Compile Include="HorizontalSliderPercentage.cs" />
+    <Compile Include="Controls\HorizontalSliderFloat.cs" />
+    <Compile Include="Controls\HorizontalSliderDouble.cs" />
+    <Compile Include="Controls\HorizontalSliderInteger.cs" />
+    <Compile Include="Controls\HorizontalSliderPercentage.cs" />
     <Compile Include="IGHCustomControl.cs" />
     <Compile Include="IGHPanel.cs" />
     <Compile Include="IGHPanelExtensions.cs" />
     <Compile Include="GHControl.cs" />
-    <Compile Include="HorizontalSlider.cs" />
-    <Compile Include="Label.cs" />
-    <Compile Include="NumericUpDown.cs" />
-    <Compile Include="NumericUpDownData.cs" />
-    <Compile Include="PictureFrame.cs" />
-    <Compile Include="ProgressBar.cs" />
+    <Compile Include="Controls\HorizontalSlider.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\NumericUpDown.cs" />
+    <None Include="NumericUpDownData.cs" />
+    <Compile Include="Controls\PictureFrame.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="PushButton.cs" />
-    <Compile Include="StackPanel.cs" />
-    <Compile Include="TabPanel.cs" />
+    <Compile Include="Controls\PushButton.cs" />
+    <Compile Include="Controls\StackPanel.cs" />
+    <Compile Include="Controls\TabPanel.cs" />
     <Compile Include="NumericUpDownWindow.xaml.cs">
       <DependentUpon>NumericUpDownWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToggleSwitch.cs" />
-    <Compile Include="MultiToggleSwitchControl.cs" />
-    <Compile Include="MultiToggleSwitchItem.cs" />
+    <Compile Include="Controls\ToggleSwitch.cs" />
+    <Compile Include="Controls\MultiToggleSwitchControl.cs" />
+    <Compile Include="Controls\MultiToggleSwitchItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>

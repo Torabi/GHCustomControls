@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
+using WPFNumericUpDown;
 namespace GHCustomControls
 {
     /// <summary>
@@ -51,60 +51,95 @@ namespace GHCustomControls
 
 
 
-
-        internal void SetData<T>(NumericUpDownData<T> numericUpDownControl) where T:struct, IFormattable, IComparable<T>
+        internal void SetInteger(IntegerNumber number)
         {
-            Control control;
-            Binding binding = new Binding("Value");
-            binding.Source = numericUpDownControl;
-            if (typeof(T) == typeof(int))
-            {
-                var numeric = new IntegerUpDown();
-                numeric.Minimum = Convert.ToInt32(numericUpDownControl._min);
-                numeric.Maximum = Convert.ToInt32(numericUpDownControl._max);
-                numeric.UpdateValueOnEnterKey = true;
-                numeric.FormatString = numericUpDownControl.FormatString;
-                numeric.SetBinding(IntegerUpDown.ValueProperty, binding);
-                 
-                control = numeric;
-            }
-            else if (typeof(T) == typeof(decimal))
-            {
-                var numeric = new DecimalUpDown();
-                numeric.Minimum = Convert.ToDecimal(numericUpDownControl._min);
-                numeric.Maximum = Convert.ToDecimal(numericUpDownControl._max);
-                numeric.Increment = (numeric.Maximum - numeric.Minimum) / 100;
-                numeric.UpdateValueOnEnterKey = true;
-                numeric.FormatString = numericUpDownControl.FormatString;
-                numeric.SetBinding(DecimalUpDown.ValueProperty, binding);
-                control = numeric;
-            }
-            else if (typeof(T) == typeof(double))
-            {
-                var numeric = new DoubleUpDown();
-                numeric.Minimum = Convert.ToDouble(numericUpDownControl._min);
-                numeric.Maximum = Convert.ToDouble(numericUpDownControl._max);
-                numeric.UpdateValueOnEnterKey = true;
-                numeric.SetBinding(DoubleUpDown.ValueProperty, binding);
-                numeric.FormatString = numericUpDownControl.FormatString;
-                control = numeric;
-            }
-            else
-            {
-                throw new Exception($"Inavlid type, Expected int,double or decimal received {typeof(T)}");
-            }
-            //control.Width = 200;
-            //control.Height = 24;
-            control.Name = "Numeric";
-            control.Background = Brushes.LightGoldenrodYellow;
+            IntegerNumericControl control = new IntegerNumericControl();
+            control.FontSize = 14;
+            control.DATA = number;
             control.KeyDown += Control_KeyDown;
-            
             this.PlaceHolder.Children.Add(control);
-
-            
-             
-
         }
+        internal void SetFloat(FloatNumber number)
+        {
+            FloatNumericControl control = new FloatNumericControl();
+            control.FontSize = 14;
+            control.DATA = number;
+            control.KeyDown += Control_KeyDown;
+            this.PlaceHolder.Children.Add(control);
+        }
+        internal void SetDouble(DoubleNumber number)
+        {
+            DoubleNumericControl control = new DoubleNumericControl();
+            control.FontSize = 14;
+            control.DATA = number;
+            control.KeyDown += Control_KeyDown;
+            this.PlaceHolder.Children.Add(control);
+        }
+
+        internal void SetGeneric<T>(GenericNumber<T> number) where T : struct, IFormattable, IComparable<T>
+        {
+            GenericNumericControl<T> control = new GenericNumericControl<T>();
+            control.FontSize =14;
+            control.DATA = number;
+            control.KeyDown += Control_KeyDown;
+            this.PlaceHolder.Children.Add(control);
+        }
+
+
+        //internal void SetData<T>(GenericNumber<T> number) where T:struct, IFormattable, IComparable<T>
+        //{
+        //    Control control;
+
+            //            //Binding binding = new Binding("Value");
+            //            //binding.Source = numericUpDownControl;
+            //            //if (typeof(T) == typeof(int))
+            //            //{
+            //            //    var numeric = new IntegerUpDown();
+            //            //    numeric.Minimum = Convert.ToInt32(numericUpDownControl._min);
+            //            //    numeric.Maximum = Convert.ToInt32(numericUpDownControl._max);
+            //            //    numeric.UpdateValueOnEnterKey = true;
+            //            //    numeric.FormatString = numericUpDownControl.FormatString;
+            //            //    numeric.SetBinding(IntegerUpDown.ValueProperty, binding);
+
+            //        //    control = numeric;
+            //        //}
+            //        //else if (typeof(T) == typeof(decimal))
+            //        //{
+            //        //    var numeric = new DecimalUpDown();
+            //        //    numeric.Minimum = Convert.ToDecimal(numericUpDownControl._min);
+            //        //    numeric.Maximum = Convert.ToDecimal(numericUpDownControl._max);
+            //        //    numeric.Increment = (numeric.Maximum - numeric.Minimum) / 100;
+            //        //    numeric.UpdateValueOnEnterKey = true;
+            //        //    numeric.FormatString = numericUpDownControl.FormatString;
+            //        //    numeric.SetBinding(DecimalUpDown.ValueProperty, binding);
+            //        //    control = numeric;
+            //        //}
+            //        //else if (typeof(T) == typeof(double))
+            //        //{
+            //        //    var numeric = new DoubleUpDown();
+            //        //    numeric.Minimum = Convert.ToDouble(numericUpDownControl._min);
+            //        //    numeric.Maximum = Convert.ToDouble(numericUpDownControl._max);
+            //        //    numeric.UpdateValueOnEnterKey = true;
+            //        //    numeric.SetBinding(DoubleUpDown.ValueProperty, binding);
+            //        //    numeric.FormatString = numericUpDownControl.FormatString;
+            //        //    control = numeric;
+            //        //}
+            //        //else
+            //        //{
+            //        //    throw new Exception($"Inavlid type, Expected int,double or decimal received {typeof(T)}");
+            //        //}
+            //        //control.Width = 200;
+            //        //control.Height = 24;
+            //    //    control.Name = "Numeric";
+            //    //control.Background = Brushes.LightGoldenrodYellow;
+            //    //control.KeyDown += Control_KeyDown;
+
+            //    //this.PlaceHolder.Children.Add(control);
+
+
+
+
+            //}
 
         private void Control_KeyDown(object sender, KeyEventArgs e)
         {
