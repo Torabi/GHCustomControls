@@ -320,6 +320,11 @@
             updates the control graphics at the next paint operation
             </summary>
         </member>
+        <member name="M:GHCustomControls.GHControl.ForceRedraw">
+            <summary>
+            schedule to redraw the canvas in 100 ms
+            </summary>
+        </member>
         <member name="F:GHCustomControls.HorizontalSlider._sliderRec">
             <summary>
             the rectangle host the slider grip

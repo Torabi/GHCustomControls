@@ -41,8 +41,8 @@ namespace GHCustomControls
             ToolTipDiagram = toolTipDiagram;
         }
 
-        internal static Font SmallFont =GH_FontServer.StandardAdjusted;
-        internal static Font StandardFont = GH_FontServer.LargeAdjusted;
+        public static Font SmallFont =GH_FontServer.StandardAdjusted;
+        public static Font StandardFont = GH_FontServer.LargeAdjusted;
 
         internal GHCustomAttributes attributes;
 
@@ -255,6 +255,13 @@ namespace GHCustomControls
             //    foreach (IGHCustomControl control in panel.Items)
             //        control.Refresh();
             //}
+        }
+        /// <summary>
+        /// schedule to redraw the canvas in 100 ms
+        /// </summary>
+        public void ForceRedraw()
+        {
+            Grasshopper.Instances.ActiveCanvas.ScheduleRegen(100);
         }
 
         
