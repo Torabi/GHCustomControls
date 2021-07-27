@@ -43,9 +43,9 @@ namespace GHCustomControls
 
         public StringAlignment Alignment { get; set; }
 
-        
+        #region mouse events
 
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             
         }
@@ -55,7 +55,7 @@ namespace GHCustomControls
             
         }
 
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
              
         }
@@ -64,7 +64,7 @@ namespace GHCustomControls
         {
              
         }
-
+        #endregion
         internal override void Render(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
         {
             

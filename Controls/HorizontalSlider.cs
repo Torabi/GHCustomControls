@@ -168,7 +168,7 @@ namespace GHCustomControls
 
         internal override void MouseLeftClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
-           
+            
             if (_sliderRec.Contains(e.CanvasLocation))
             {
                 
@@ -206,7 +206,7 @@ namespace GHCustomControls
 
             
         }
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             //check if the slider is in moving state
             base.MouseLeave(sender, customComponent, e, ref result);
@@ -236,7 +236,7 @@ namespace GHCustomControls
             //}
         }
 
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
 
             base.MouseOver(sender,customComponent,e,ref result);
@@ -260,6 +260,7 @@ namespace GHCustomControls
                     X = e.CanvasX - Bounds.Left;
                 }
                 UpdateValue();
+                ForceRedraw();
                 result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.UpdateSolution;
 
             }
@@ -272,7 +273,7 @@ namespace GHCustomControls
            
         }
 
-        internal override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             base.MouseKeyUp( sender, customComponent, e, ref result);
             if (isMoving)

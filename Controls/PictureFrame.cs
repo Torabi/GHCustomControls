@@ -79,8 +79,8 @@ namespace GHCustomControls
         {
             return _size.Width+2*Offset;
         }
-
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        #region mouse events
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
              
         }
@@ -90,7 +90,7 @@ namespace GHCustomControls
             
         }
 
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             
         }
@@ -99,7 +99,7 @@ namespace GHCustomControls
         {
              
         }
-
+        #endregion
         internal override void Render(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
         {
             Helpers.DrawFrame(Bounds, graphics, "", selected, locked, hidden);

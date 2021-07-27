@@ -44,7 +44,12 @@ namespace GHCustomControls
         public static Font SmallFont =GH_FontServer.StandardAdjusted;
         public static Font StandardFont = GH_FontServer.LargeAdjusted;
 
-        internal GHCustomAttributes attributes;
+        /// <summary>
+        /// if true then updates the solution when change
+        /// </summary>
+        public bool UpdateSolution { get; set; } = true;
+
+        public GHCustomAttributes Attributes;
 
         internal abstract int GetHeight();
         internal abstract int GetWidth();
@@ -56,8 +61,8 @@ namespace GHCustomControls
         /// <summary>
         /// true when the cursor is inside the <c>ActiveZone</c>
         /// </summary>
-        internal bool isMouseIn = false;
-        internal virtual void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public bool IsMouseIn = false;
+        public virtual void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             if (this is IGHPanel)
             {
@@ -69,18 +74,18 @@ namespace GHCustomControls
 
             if (ActiveZone.Contains(e.CanvasLocation))
             {
-                if (!isMouseIn)
+                if (!IsMouseIn)
                 {
-                    isMouseIn = true;
+                    IsMouseIn = true;
                     result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.Handled;
                     return;
                 }
             }
             else
             {
-                if (isMouseIn )
+                if (IsMouseIn )
                 {
-                    isMouseIn = false;
+                    IsMouseIn = false;
                     result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.Handled;
 
                 }
@@ -89,14 +94,14 @@ namespace GHCustomControls
             
         }
 
-        internal virtual RectangleF ActiveZone => Bounds;
-        internal virtual void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e,ref GHMouseEventResult result)
+        public virtual RectangleF ActiveZone => Bounds;
+        public virtual void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e,ref GHMouseEventResult result)
         {
             
             
-            if (isMouseIn)
+            if (IsMouseIn)
             {
-                isMouseIn = false;
+                IsMouseIn = false;
                 result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.Handled;
                 return;
 
@@ -135,7 +140,7 @@ namespace GHCustomControls
          
 
 
-        internal virtual void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result) 
+        public virtual void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result) 
         { 
             if (this is IGHPanel)
             {
@@ -145,6 +150,10 @@ namespace GHCustomControls
                     if (control.Bounds.Contains(e.CanvasLocation))
                     {
                         control.MouseKeyUp(sender, customComponent, e, ref result);
+                        if (!control.UpdateSolution)
+                        {
+                            result &= ~GHMouseEventResult.UpdateSolution;
+                        }
                         if (result.HasFlag(GHMouseEventResult.Handled))
                             return;
                     }
@@ -179,7 +188,7 @@ namespace GHCustomControls
             { 
                 if (_visible != value)
                 {
-                    attributes?.Redraw();
+                    Attributes?.Redraw();
                     _visible = value;
                          
                 }
@@ -215,13 +224,13 @@ namespace GHCustomControls
         /// <param name="att"></param>
         internal void SetAttribute(GHCustomAttributes att)
         {
-            attributes = (GHCustomAttributes)att;
+            Attributes = (GHCustomAttributes)att;
             if (this is IGHPanel)
             {
                 IGHPanel panel = (IGHPanel)this;
                 foreach (GHControl child in panel.Items)
                 {
-                    child.SetAttribute(attributes);
+                    child.SetAttribute(Attributes);
                 }
             }
         }

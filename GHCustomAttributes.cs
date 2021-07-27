@@ -147,7 +147,7 @@ namespace GHCustomControls
                             control.MouseLeftClick( sender, owner, e, ref result);
                         else if (e.Button == System.Windows.Forms.MouseButtons.Right)
                             control.MouseRightClick( sender, owner, e, ref result);
-                        if (control is GHParameter && !((GHParameter)control).UpdateSolution)
+                        if (!control.UpdateSolution)
                         {
                             result &= ~GHMouseEventResult.UpdateSolution;
                         }
@@ -185,7 +185,7 @@ namespace GHCustomControls
                     {
                         item.MouseLeave( sender, owner, e, ref result);
                     }
-                    if (item is GHParameter && !((GHParameter)item).UpdateSolution)
+                    if (item is GHParameter && !item.UpdateSolution)
                     {
                         result &= ~GHMouseEventResult.UpdateSolution;
                     }
@@ -224,7 +224,7 @@ namespace GHCustomControls
                     if (item.Bounds.Contains(e.CanvasLocation))
                     {
                         item.MouseKeyUp( sender, owner, e, ref result);
-                        if (item is GHParameter && !((GHParameter)item).UpdateSolution)
+                        if (item is GHParameter && !item.UpdateSolution)
                         {
                             result &= ~GHMouseEventResult.UpdateSolution;
                         }
@@ -266,10 +266,42 @@ namespace GHCustomControls
 
         public override GH_ObjectResponse RespondToMouseDoubleClick(GH_Canvas sender, GH_CanvasMouseEvent e)
         {
+            GHCustomComponent owner = Owner as GHCustomComponent;
+            GHMouseEventResult result = GHMouseEventResult.None;
+            var backup = sender.Cursor;
             if (Bounds.Contains(e.CanvasLocation))
             {
-                return GH_ObjectResponse.Ignore;
+                foreach (GHControl item in owner.CustomControls.Values)
+                {
+                    if (!item.Enabled)
+                        continue;
+                    if (item.Bounds.Contains(e.CanvasLocation))
+                    {
+                        item.MouseRightClick(sender, owner, e, ref result);
+
+                    }
+                        
+                    if (item is GHParameter && !item.UpdateSolution)
+                    {
+                        result &= ~GHMouseEventResult.UpdateSolution;
+                    }
+                }
+
+                if (result.HasFlag(GHMouseEventResult.Invalidated))
+                    sender.Invalidate();
+                if (result.HasFlag(GHMouseEventResult.UpdateSolution))
+                    owner.ExpireSolution(true);
+
+
+                if (result.HasFlag(GHMouseEventResult.Handled))
+                    return GH_ObjectResponse.Ignore;
+
+
+
             }
+        
+
+
             return base.RespondToMouseDoubleClick(sender, e);
         }
 

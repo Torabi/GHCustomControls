@@ -48,14 +48,14 @@ namespace GHCustomControls
         public void Add(string name,int value, params GHControl[] controls)
         {
             foreach (var control in controls)
-                control.attributes = attributes;
+                control.Attributes = Attributes;
             _tabs.Add(name, controls);
             _values.Add(value); 
         }
         public void Add(string name,int value,Image image16x16, params GHControl[] controls)
         {
             foreach (var control in controls)
-                control.attributes = attributes;
+                control.Attributes = Attributes;
 
             _tabs.Add(name, controls);
             _values.Add(value);
@@ -65,14 +65,14 @@ namespace GHCustomControls
         public void Add(string name, params GHControl[] controls)
         {
             foreach (var control in controls)
-                control.attributes = attributes;
+                control.Attributes = Attributes;
             _tabs.Add(name, controls);
             _values.Add(_values.Count);
         }
         public void Add(string name, Image image16x16, params GHControl[] controls)
         {
             foreach (var control in controls)
-                control.attributes = attributes;
+                control.Attributes = Attributes;
 
             _tabs.Add(name, controls);
             _values.Add(_values.Count);
@@ -218,7 +218,7 @@ namespace GHCustomControls
                     //Items = _tabs.Values.ToArray()[i];
                     // update the mouse event 
                     result = result | GHMouseEventResult.Handled | GHMouseEventResult.UpdateSolution;
-                    attributes?.Redraw();
+                    Attributes?.Redraw();
                     break;
                 }
             }
@@ -226,7 +226,7 @@ namespace GHCustomControls
             this.MouseClickChildren(sender, customComponent, e, ref result);
         }
 
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
 
             // the cursor is already outside this control we must remove the heighlight from the header 
@@ -239,7 +239,7 @@ namespace GHCustomControls
             this.MouseOverChildren(sender, customComponent, e, ref result);
         }
         int HighlightedHeader = -1;
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
 
             //when cursor is hovering above the control we check if it highlights any of header
@@ -261,6 +261,18 @@ namespace GHCustomControls
             //the cursor was not above any header so we check the child
             this.MouseOverChildren(sender, customComponent, e, ref result);
         }
+        internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+
+            // click was out side of the header area, pass the click to the children
+            this.MouseClickChildren(sender, customComponent, e, ref result);
+        }
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+            this.MouseKeyUpChildren(sender, customComponent, e, ref result);
+        }
+        #endregion
+
         internal override void SetupToolTip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)
         {
            
@@ -279,14 +291,9 @@ namespace GHCustomControls
             }
             
         }
-        internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
-        {
-           
-            // click was out side of the header area, pass the click to the children
-            this.MouseClickChildren( sender, customComponent, e, ref result);
-        }
+        
 
-        #endregion
+        
         private PointF[] headerShape(RectangleF rec)
         {
             return new PointF[]

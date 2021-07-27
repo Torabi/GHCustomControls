@@ -25,15 +25,49 @@ namespace GHCustomControls
 {
     public class ToggleSwitch : GHParameter
     {
-        public ToggleSwitch(string name,string description, bool defaultValue, Bitmap toolTipDiagram = null) : base(name,description, defaultValue, toolTipDiagram) 
+        /// <summary>
+        /// construict a new instanc of toggle switch 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="toolTipDiagram"></param>
+        public ToggleSwitch(string name, string description, bool defaultValue, Bitmap toolTipDiagram = null) : base(name, description, defaultValue, toolTipDiagram)
         {
-            
+
         }
+
+        #region Brushes & Colors
+        /// <summary>
+        /// the fill color of the background when toggle is on
+        /// </summary>
+        public Color OnFill { get; set; } = Color.LawnGreen;
+
+        /// <summary>
+        /// the fill color of the background when toggle is off
+        /// </summary>
+        public Color OffFill { get; set; } = Color.DarkGray;
+        /// <summary>
+        /// the color of the toggle (default is white)
+        /// </summary>
+        public Brush ToggleBrush { get; set; } = Brushes.White;
+        /// <summary>
+        /// default color of the border 
+        /// </summary>
+        public Color BorderColor { get; set; } = Color.Black;
+        /// <summary>
+        /// the color of the border when it is highlighte (mouse over)
+        /// </summary>
+        public Color BorderColorHighlighted { get; set; } = Color.OrangeRed;
+
+        #endregion
+
         public override GH_Types DataType => GH_Types.gh_bool;
 
         public override GH_ParamAccess Access =>  GH_ParamAccess.item;
 
-       
+        
+
         RectangleF _toggleRec;
         
         public override RectangleF Bounds { get  ; set  ; }
@@ -93,7 +127,7 @@ namespace GHCustomControls
         //    }
         //}
         //}
-        internal override RectangleF ActiveZone => _toggleRec;
+        public override RectangleF ActiveZone => _toggleRec;
 
         internal override void Render(Graphics graphics,PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
         {
@@ -122,11 +156,11 @@ namespace GHCustomControls
             _toggleRec = new RectangleF(Bounds.Right - Offset - _width, Bounds.Top + Offset/2, _width, _height);
             GH_Capsule capsule = GH_Capsule.CreateCapsule(_toggleRec, GH_Palette.Normal, (int)_toggleRec.Height / 2, 0);
             capsule.Render(graphics, new GH_PaletteStyle(
-                (Enabled)?(_toggle ? Color.LawnGreen : Color.DarkGray): Color.Gray,
-                (Enabled) ? ((Highlighted)?Color.OrangeRed:Color.Black): Color.Gray));
+                (Enabled)?(_toggle ? OnFill : OffFill): Color.Gray,
+                (Enabled) ? ((Highlighted)?BorderColorHighlighted:BorderColor): Color.Gray));
             capsule.Dispose();
             graphics.FillEllipse(
-                (Enabled)?Brushes.White:Brushes.DarkGray,
+                (Enabled)?ToggleBrush:Brushes.DarkGray,
                 (_toggle) ? _toggleRec.Right-_height : _toggleRec.Left+2,
                 _toggleRec.Top+2 ,
                 _height-4, _height-4);

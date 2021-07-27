@@ -32,18 +32,23 @@ namespace GHCustomControls
         int _radius;
         float _round=1;
         /// <summary>
+        /// number of decimals to display the angle 
+        /// </summary>
+        int _decimals;
+        /// <summary>
         /// Construc a Degree slider with min and max limits
         /// </summary>
         /// <param name="min">minimum value</param>
         /// <param name="max">maximum value</param>
         /// <param name="radius">the radius of the contorl</param>
         /// <param name="defualtValue"></param>
-        public DegreeSlider(string name,string description,int radius,float min, float max, float defualtValue , Bitmap toolTipDiagram = null) : base(name,description,defualtValue, toolTipDiagram) 
+        public DegreeSlider(string name,string description,int radius,float min, float max, float defualtValue, int decimals=0 , Bitmap toolTipDiagram = null) : base(name,description,defualtValue, toolTipDiagram) 
         {
             
             _min = min;
             _max = max;
             _radius = radius;
+            _decimals = decimals;
             var square = _hotZoneScale * _hotZoneScale;
             var x =   _radius / (square);
             var y =   (float)Math.Sqrt(square - 1) * _radius / (square);
@@ -155,7 +160,7 @@ namespace GHCustomControls
 
         private string AsString(float angle)
         {
-            return angle.ToString("F1");
+            return angle.ToString($"F{_decimals}");
         }
         /// <summary>
         /// returns true if the given angle in 360 is in given min and max range 
@@ -170,7 +175,7 @@ namespace GHCustomControls
                 return (angle >= 0 && angle <= _max) || (angle <= 0 && angle >= _min);
         }
 
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
 
             //if (Highlighted==0)
@@ -208,7 +213,7 @@ namespace GHCustomControls
             }
         }
 
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
 
             // check if cursor is above thes quare 
@@ -241,7 +246,7 @@ namespace GHCustomControls
             }
 
         }
-        internal override RectangleF ActiveZone => _square;
+        public override RectangleF ActiveZone => _square;
         internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             
@@ -249,7 +254,7 @@ namespace GHCustomControls
             {
                 decimal d = Convert.ToDecimal(CurrentValue);
                 //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal(_min), Convert.ToDecimal(_max),"");
-                FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, 1, 1);
+                FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, 1, _decimals+2);
                 //if (numeric.GetInput(PointToScreen(sender, center), out decimal val))
                 if (Helpers.GetFloatInput(PointToScreen(sender, center),number))
                 {
@@ -263,7 +268,7 @@ namespace GHCustomControls
             }
         }
 
-        internal override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             if (isMoving)
             {

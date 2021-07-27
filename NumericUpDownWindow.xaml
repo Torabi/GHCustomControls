@@ -8,10 +8,11 @@
         xmlns:prop="clr-namespace:GHCustomControls.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="26" d:DesignWidth="100" 
-              Width="100"
-        Height="26"
-        Margin="0"
-        
+              Width="200"
+        Height="46"
+   
+        Background="#01000000"
+        AllowsTransparency="True"
         MouseLeave="Window_MouseLeave"
         PreviewKeyDown="Window_PreviewKeyDown"
         Loaded="Window_Loaded" WindowStyle="None" ResizeMode="NoResize"    
@@ -22,12 +23,12 @@
     <Window.Resources>
         <BitmapImage x:Key="a" UriSource="./Resources/greenRoundOkButton.png" ></BitmapImage>
     </Window.Resources>
-    <Grid  VerticalAlignment="Stretch" Background="LightYellow">
+    <Grid  VerticalAlignment="Stretch" Background="LightYellow" Width="100" Height="24" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="73*"></ColumnDefinition>
-            <ColumnDefinition Width="27*"></ColumnDefinition>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="PlaceHolder"  Grid.Column="0" Margin="0,0,2.333,0">
+        <Grid x:Name="PlaceHolder"  Grid.Column="0" Margin="2,2,2,2" Background="LightYellow">
 
         </Grid>
 

@@ -82,6 +82,7 @@ namespace GHCustomControls
             control.FontSize =14;
             control.DATA = number;
             control.KeyDown += Control_KeyDown;
+            control.Background = Brushes.LightYellow;
             this.PlaceHolder.Children.Add(control);
         }
 

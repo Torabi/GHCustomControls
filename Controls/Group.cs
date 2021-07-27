@@ -38,6 +38,9 @@ namespace GHCustomControls
         /// icon , if not null
         /// </summary>
         Image _icon16x16;
+        /// <summary>
+        /// Get or Set the Collapse state of the group, (when true the group is collapsed)
+        /// </summary>
         bool Collapsed
         {
             get => (bool)CurrentValue;
@@ -106,7 +109,7 @@ namespace GHCustomControls
         public void Add ( params GHControl[] items)
         {
             foreach (GHControl item in items)
-                item.attributes = attributes;
+                item.Attributes = Attributes;
 
             Items = Items.Concat(items).ToArray();
         }
@@ -140,14 +143,15 @@ namespace GHCustomControls
 
         internal override void MouseLeftClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
- 
+            if (!Enabled)
+                return;
             if (_switch.Contains(e.CanvasLocation))
             {
                 Collapsed = !Collapsed;
                 
                 result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.Handled;
 
-                attributes?.Redraw();
+                Attributes?.Redraw();
                 return;
             }
             // pass the clicl events to the children
@@ -158,8 +162,13 @@ namespace GHCustomControls
         }
         internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
- 
+            if (!Enabled)
+                return;
             this.MouseClickChildren( sender, customComponent, e, ref result);
+        }
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+            this.MouseKeyUpChildren(sender, customComponent, e, ref result);
         }
         //internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         //{
@@ -169,7 +178,7 @@ namespace GHCustomControls
         //    //    //if (control.Bounds.Contains(e.CanvasLocation))
         //    //    //{
         //    //        control.MouseOver(sender, customComponent, e, ref result);
-                    
+
         //    //    //}
         //    //}  
         //    this.MouseOverChildren( sender, customComponent, e, ref result);
@@ -186,7 +195,7 @@ namespace GHCustomControls
         //    //    {
         //    //        Highlighted = 0;
         //    //        result = result | GHMouseEventResult.Invalidated;
-                  
+
         //    //    }
         //    //    return;
         //    //}
@@ -196,7 +205,7 @@ namespace GHCustomControls
         //    //    {
         //    //        Highlighted = -1;
         //    //        result = result | GHMouseEventResult.Invalidated;
-                    
+
         //    //    }
         //    //}
         //    this.MouseOverChildren( sender, customComponent, e, ref result);
@@ -208,7 +217,7 @@ namespace GHCustomControls
         //    //    }
         //    //}
         //}
-        internal override RectangleF ActiveZone => _switch;
+        public override RectangleF ActiveZone => _switch;
         internal override void SetupToolTip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)
         {
              

@@ -69,8 +69,8 @@ namespace GHCustomControls
         /// true between the mouse down and mouse up event
         /// </summary>
         bool _isPressed = false;
-
-        internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        #region mouse events
+        public override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
             if (e.WinFormsEventArgs.Button != System.Windows.Forms.MouseButtons.Left)
                 _isPressed = false;
@@ -105,26 +105,36 @@ namespace GHCustomControls
             
         }
 
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+            base.MouseKeyUp(sender, customComponent, e, ref result);
+            if (!Enabled)
+                return;
+            _isPressed = false;
+            CurrentValue = 0;
+            result = result | GHMouseEventResult.Invalidated | GHMouseEventResult.Handled;
+        }
+        #endregion
+
         internal override void Render(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
         {
             bool Highlighted = _live? Bounds.Contains(cursorCanvasPosition):true;
                 GH_PaletteStyle style = new GH_PaletteStyle(
-                (!Enabled || locked) ? Color.DarkGray                
+                (!Enabled || locked || hidden) ? Color.DarkGray                
                 :
                 (_isPressed ? Color.OrangeRed :
                 (Highlighted ) ? Color.LightGray : Color.SlateGray), _isPressed ? Color.LightGoldenrodYellow : Color.DimGray);
 
             RectangleF rec = Bounds.Offset(Offset);
             
-            GH_Capsule capsule = GH_Capsule.CreateCapsule(rec, GH_Palette.Transparent, (!Enabled || locked)?0:1, 0);
+            GH_Capsule capsule = GH_Capsule.CreateCapsule(rec, GH_Palette.Transparent, (!Enabled || locked || hidden)?0:1, 0);
 
-            if (!hidden)
-            {
-                if (!Enabled || locked)
-                    capsule.Render(graphics, selected, true, false);
-                else
-                    capsule.Render(graphics, style);
-            }
+             
+            if (!Enabled || locked)
+                capsule.Render(graphics, selected, true, false);
+            else
+                capsule.Render(graphics, style);
+             
             capsule.Dispose();
             if (_icon!=null)
             {
@@ -158,15 +168,7 @@ namespace GHCustomControls
             }
         }
 
-        internal override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
-        {
-            base.MouseKeyUp( sender, customComponent, e, ref result);
-            if (!Enabled)
-                return;
-            _isPressed = false;
-            CurrentValue = 0;
-            result = result | GHMouseEventResult.Invalidated  | GHMouseEventResult.Handled;
-        }
+        
      
 
         internal override int GetHeight()

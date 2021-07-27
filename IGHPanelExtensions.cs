@@ -142,11 +142,11 @@ namespace GHCustomControls
             {
                 if (control.Enabled && control.Bounds.Contains(e.CanvasLocation))
                 {
-                    if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                    if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks!=2)
                         control.MouseLeftClick( sender, customComponent, e, ref result);
-                    else
+                    else  
                         control.MouseRightClick(sender,customComponent, e, ref result);
-                    if (control is GHParameter && !((GHParameter)control).UpdateSolution)
+                    if (!control.UpdateSolution)
                     {
                         result &= ~GHMouseEventResult.UpdateSolution;
                     }
@@ -157,6 +157,28 @@ namespace GHCustomControls
                 }
             }
         }
+
+        public static void MouseKeyUpChildren(this IGHPanel gHContainer, GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+
+            foreach (GHControl control in gHContainer.Items)
+            {
+                if (control.Enabled && control.Bounds.Contains(e.CanvasLocation))
+                {                     
+                    control.MouseKeyUp(sender, customComponent, e, ref result);
+                                         
+                    if (!control.UpdateSolution)
+                    {
+                        result &= ~GHMouseEventResult.UpdateSolution;
+                    }
+                    if (result.HasFlag(GHMouseEventResult.Handled))
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// finds the children in which the cursor is inside and then call the MouseOver method for that child
         /// </summary>
@@ -172,12 +194,20 @@ namespace GHCustomControls
                 if (control.Bounds.Contains(e.CanvasLocation) && control.Enabled )
                 {
                     control.MouseOver( sender, customComponent, e, ref result);
+                    if (!control.UpdateSolution)
+                    {
+                        result &= ~GHMouseEventResult.UpdateSolution;
+                    }
                     if (result.HasFlag(GHMouseEventResult.Invalidated)) // no need to continue as this child already set the flag 
                         return;
                 }
                 else
                 {
                     control.MouseLeave( sender, customComponent, e, ref result);
+                    if (!control.UpdateSolution)
+                    {
+                        result &= ~GHMouseEventResult.UpdateSolution;
+                    }
                     //if (result.HasFlag(GHMouseEventResult.Invalidated)) // no need to continue as this child already set the flag 
                     //    return;
                 }

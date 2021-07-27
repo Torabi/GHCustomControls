@@ -101,7 +101,17 @@ namespace GHCustomControls
                 size.Width,
                 size.Height);
         }
+        /// <summary>
+        /// return the point in the center of the rectangle
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <returns></returns>
+        public static PointF Middle(this RectangleF rectangle)
+        {
+            return new PointF(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f);
+        }
 
+        //public static PointF
         
         
 
@@ -168,7 +178,7 @@ namespace GHCustomControls
 
         public static bool GetIntegerInput(System.Drawing.Point location,IntegerNumber number)
         {
-            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y));
+            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y+11));
             int previous = number.Value;
             window.SetInteger(number);
             window.ShowDialog();            
@@ -186,7 +196,7 @@ namespace GHCustomControls
 
         public static bool GetFloatInput(System.Drawing.Point location, FloatNumber number)
         {
-            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y));
+            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y+11));
             float previous = number.Value;
             window.SetFloat(number);
             window.ShowDialog();
@@ -202,7 +212,7 @@ namespace GHCustomControls
         }
         public static bool GetDoubleInput(System.Drawing.Point location,DoubleNumber number)
         {
-            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y));
+            NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y+11));
             double previous = number.Value;
             window.SetDouble(number);
             window.ShowDialog();

@@ -94,7 +94,7 @@ namespace GHCustomControls
             
             }
         }
-        internal override RectangleF ActiveZone => _checkBoxRec;
+        public override RectangleF ActiveZone => _checkBoxRec;
 
         internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {

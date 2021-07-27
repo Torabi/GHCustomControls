@@ -179,7 +179,7 @@ namespace GHCustomControls
 
 
         #region mouse events
-        internal override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult invalidated)
+        public override void MouseOver(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult invalidated)
         {
 
             base.MouseOver(sender, customComponent, e, ref invalidated);
@@ -197,7 +197,7 @@ namespace GHCustomControls
 
 
         }
-        internal override RectangleF ActiveZone => SelectedItem==-1?Bounds: _items[SelectedItem].Bounds;
+        public override RectangleF ActiveZone => SelectedItem==-1?Bounds: _items[SelectedItem].Bounds;
         //internal override void MouseLeave(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult invalidated)
         //{
         //    base.MouseLeave(sender, customComponent, e, ref invalidated);

@@ -51,7 +51,7 @@ namespace GHCustomControls
         }
         public void Add(GHControl control)
         {
-            control.attributes = attributes;
+            control.Attributes = Attributes;
             Items = Items.Append(control).ToArray();
         }
         
@@ -126,6 +126,10 @@ namespace GHCustomControls
         {
          
             this.MouseClickChildren( sender, customComponent, e, ref result);
+        }
+        public override void MouseKeyUp(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
+        {
+            this.MouseKeyUpChildren(sender, customComponent, e, ref result);
         }
 
         internal override void Render(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)

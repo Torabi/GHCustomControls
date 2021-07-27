@@ -28,7 +28,12 @@
             the rectangle representing the check box
             </summary>
         </member>
-        <member name="M:GHCustomControls.DegreeSlider.#ctor(System.String,System.String,System.Int32,System.Single,System.Single,System.Single,System.Drawing.Bitmap)">
+        <member name="F:GHCustomControls.DegreeSlider._decimals">
+            <summary>
+            number of decimals to display the angle 
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.DegreeSlider.#ctor(System.String,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Drawing.Bitmap)">
             <summary>
             Construc a Degree slider with min and max limits
             </summary>
@@ -116,11 +121,6 @@
             type of the data stored in parameter
             </summary>
         </member>
-        <member name="P:GHCustomControls.GHParameter.UpdateSolution">
-            <summary>
-            if true then updates the solution when change
-            </summary>
-        </member>
         <member name="P:GHCustomControls.GHParameter.CurrentValue">
             <summary>
             the value stored in the parameter
@@ -139,6 +139,11 @@
         <member name="F:GHCustomControls.Group._icon16x16">
             <summary>
             icon , if not null
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.Group.Collapsed">
+            <summary>
+            Get or Set the Collapse state of the group, (when true the group is collapsed)
             </summary>
         </member>
         <member name="M:GHCustomControls.Group.FindMember(System.String,GHCustomControls.GHControl@)">
@@ -162,6 +167,13 @@
             </summary>
             <param name="rectangle"></param>
             <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.Helpers.Middle(System.Drawing.RectangleF)">
+            <summary>
+            return the point in the center of the rectangle
+            </summary>
+            <param name="rectangle"></param>
             <returns></returns>
         </member>
         <member name="M:GHCustomControls.HorizontalSliderFloat.#ctor(System.String,System.String,System.Single,System.Single,System.Single,System.Int32,System.String,System.Boolean)">
@@ -267,7 +279,12 @@
             <param name="control"></param>
             <returns></returns>
         </member>
-        <member name="F:GHCustomControls.GHControl.isMouseIn">
+        <member name="P:GHCustomControls.GHControl.UpdateSolution">
+            <summary>
+            if true then updates the solution when change
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GHControl.IsMouseIn">
             <summary>
             true when the cursor is inside the <c>ActiveZone</c>
             </summary>
@@ -493,6 +510,40 @@
         <member name="M:GHCustomControls.NumericUpDownWindow.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.ToggleSwitch.#ctor(System.String,System.String,System.Boolean,System.Drawing.Bitmap)">
+            <summary>
+            construict a new instanc of toggle switch 
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="defaultValue"></param>
+            <param name="toolTipDiagram"></param>
+        </member>
+        <member name="P:GHCustomControls.ToggleSwitch.OnFill">
+            <summary>
+            the fill color of the background when toggle is on
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.ToggleSwitch.OffFill">
+            <summary>
+            the fill color of the background when toggle is off
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.ToggleSwitch.ToggleBrush">
+            <summary>
+            the color of the toggle (default is white)
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.ToggleSwitch.BorderColor">
+            <summary>
+            default color of the border 
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.ToggleSwitch.BorderColorHighlighted">
+            <summary>
+            the color of the border when it is highlighte (mouse over)
             </summary>
         </member>
         <member name="M:GHCustomControls.MultiToggleSwitchItem.GetWidth">

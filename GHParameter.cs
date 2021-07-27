@@ -37,10 +37,7 @@ namespace GHCustomControls
 
         public abstract GH_ParamAccess Access { get;  }
 
-        /// <summary>
-        /// if true then updates the solution when change
-        /// </summary>
-        public bool UpdateSolution { get; set; } = true;
+        
 
         internal object _currentValue; 
         /// <summary>
