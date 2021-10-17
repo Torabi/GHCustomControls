@@ -74,15 +74,15 @@ namespace GHCustomControls
                     }
                 }
             }
-            if ((int)CurrentValue>_min && (int)CurrentValue <_max && !Bounds.Contains(cursorCanvasPosition))
-            {
-                using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far })
+            //if ((int)CurrentValue>_min && (int)CurrentValue <_max && !Bounds.Contains(cursorCanvasPosition))
+            //{
+            //    using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far })
                 
-                using (Pen p = new Pen(ActiveBrush()))
-                {
-                    graphics.DrawString(CurrentValue.ToString(), SmallFont, ActiveBrush(), X+Bounds.X, _sliderRec.Top, s);
-                }
-            }
+            //    using (Pen p = new Pen(ActiveBrush()))
+            //    {
+            //        graphics.DrawString(CurrentValue.ToString(), SmallFont, ActiveBrush(), X+Bounds.X, _sliderRec.Top, s);
+            //    }
+            //}
         }
         internal override void MouseRightClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
