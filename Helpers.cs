@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFNumericUpDown;
+//using WPFNumericUpDown;
 /*
 Original work Copyright (c) 2021 Ali Torabi (ali@parametriczoo.com)
 
@@ -179,6 +179,7 @@ namespace GHCustomControls
         public static bool GetIntegerInput(System.Drawing.Point location,IntegerNumber number)
         {
             NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y+11));
+            window.DataContext=number;
             int previous = number.Value;
             window.SetInteger(number);
             window.ShowDialog();            
@@ -194,10 +195,10 @@ namespace GHCustomControls
         }
 
 
-        public static bool GetFloatInput(System.Drawing.Point location, FloatNumber number)
+        public static bool GetFloatInput(System.Drawing.Point location, DecimalNumber number)
         {
             NumericUpDownWindow window = new NumericUpDownWindow(new System.Windows.Point(location.X, location.Y+11));
-            float previous = number.Value;
+            decimal previous = number.Value;
             window.SetFloat(number);
             window.ShowDialog();
             if (window.DialogResult.HasValue && window.DialogResult.Value)

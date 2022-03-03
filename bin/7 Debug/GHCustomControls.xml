@@ -57,6 +57,248 @@
             <param name="angle"></param>
             <returns></returns>
         </member>
+        <member name="T:GHCustomControls.DecimalNumber">
+            <summary>
+            class represnet a constrained float number
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.DecimalNumber.#ctor(System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Int32)">
+            <summary>
+            construc a constrain Float number
+            </summary>
+            <param name="value"><inheritdoc/></param>
+            <param name="min"><inheritdoc/></param>
+            <param name="max"><inheritdoc/></param>
+            <param name="inc"><inheritdoc/></param>
+            <param name="decimals"><inheritdoc/></param>
+        </member>
+        <member name="P:GHCustomControls.DecimalNumber._regex">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.DecimalNumber.ConvertToValue(System.String,System.Decimal@)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.DecimalNumber.decrement(System.Decimal)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.DecimalNumber.increment(System.Decimal)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GHCustomControls.DecimalNumber.FormatString">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:GHCustomControls.DoubleNumber">
+            <summary>
+            this class represent a formatted double number with constrains
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.DoubleNumber.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            construct a constrained double number
+            </summary>
+            <param name="value"><inheritdoc/></param>
+            <param name="min"><inheritdoc/> </param>
+            <param name="max"><inheritdoc/></param>
+            <param name="inc"><inheritdoc/></param>
+            <param name="decimals"><inheritdoc/></param>
+        </member>
+        <member name="P:GHCustomControls.DoubleNumber._regex">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.DoubleNumber.ConvertToValue(System.String,System.Double@)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.DoubleNumber.decrement(System.Double)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.DoubleNumber.increment(System.Double)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GHCustomControls.DoubleNumber.FormatString">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:GHCustomControls.GenericNumber`1">
+            <summary>
+            class provide basic functionality for different number classes
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.#ctor(`0,`0,`0,`0,System.Int32)">
+            <summary>
+            construct a GenericNumber class based on the Type (T)
+            </summary>
+            <param name="value">current value</param>
+            <param name="min">minimum value</param>
+            <param name="max">maximum value</param>
+            <param name="inc">increment value used to increment or decrement the current value</param>
+            <param name="decimals">number of deciams shown on the text box</param>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.Decimals">
+            <summary>
+            number of decimals shown in the textbox
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1._value">
+            <summary>
+            the current value 
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.Min">
+            <summary>
+            minimum value
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.Max">
+            <summary>
+            maximum value
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.Inc">
+            <summary>
+            value used to increment or decrement the current value
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.toInt(`0)">
+            <summary>
+            the string value corressponding to the current value 
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.increment(`0)">
+            <summary>
+            returns <c>_value + _increment</c>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.decrement(`0)">
+            <summary>
+            returns <c>_value - _increment</c>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GHCustomControls.GenericNumber`1._regex">
+            <summary>
+            provides the regex pattern for filtering numerical value based on the type (T) and lower bound (_min)
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.GenericNumber`1.Value">
+            <summary>
+            get and sets the current value
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.ConvertToString(`0)">
+            <summary>
+            convert the current value to the string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.GenericNumber`1.ConvertToValue(System.String,`0@)">
+            <summary>
+            override this method to parse the current string to type (T)
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GHCustomControls.GenericNumber`1.FormatString">
+            <summary>
+            override to provide the format string used to format the string in the text box
+            </summary>
+        </member>
+        <member name="E:GHCustomControls.GenericNumber`1.PropertyChanged">
+            <summary>
+            Property changed event
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.signedDecimal">
+            <summary>
+            filters the signed decimals
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.unSignedDecimal">
+            <summary>
+            filters the unsigned decimals
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.signedInteger">
+            <summary>
+            filters the signed integers
+            </summary>
+        </member>
+        <member name="F:GHCustomControls.GenericNumber`1.unSignedInteger">
+            <summary>
+            filters the unsigned integers
+            </summary>
+        </member>
+        <member name="T:GHCustomControls.IntegerNumber">
+            <summary>
+            a class represent a constrained integer number 
+            </summary>
+        </member>
+        <member name="M:GHCustomControls.IntegerNumber.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            construct an contrsianed integer
+            </summary>
+            <param name="value"><inheritdoc/></param>
+            <param name="min"><inheritdoc/></param>
+            <param name="max"><inheritdoc/></param>
+            <param name="inc"><inheritdoc/></param>
+        </member>
+        <member name="M:GHCustomControls.IntegerNumber.increment(System.Int32)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.IntegerNumber.decrement(System.Int32)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GHCustomControls.IntegerNumber.ConvertToValue(System.String,System.Int32@)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GHCustomControls.IntegerNumber._regex">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:GHCustomControls.IntegerNumber.FormatString">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
         <member name="F:GHCustomControls.GHCustomAttributes._offset">
             <summary>
             the amount of the offset for the bounds of this componenet from the largest sub-control 

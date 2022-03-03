@@ -1,0 +1,48 @@
+<!--
+Adds a target which runs before the build to ensure that package references
+don't get copied to the output directory. Overrides "Copy Local" (which is
+unavoidably set to "true" by nuget).
+
+Will Pearson <will@mcneel.com>
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="RemoveRhinoReferences" AfterTargets="AfterResolveReferences">
+    <PropertyGroup>
+      <_RhinoPackageName>RhinoCommon</_RhinoPackageName>
+    </PropertyGroup>
+    <ItemGroup>
+      <!-- get our package reference, if any -->
+      <_RhinoPackageReference Include="@(PackageReference)" Condition="'%(PackageReference.Identity)' == '$(_RhinoPackageName)'" />
+      <!-- only remove automatically if no include/exclude/private assets properties have been set -->
+      <_RhinoPackageReferenceAssetsOverride Include="@(_RhinoPackageReference)" Condition="%(_RhinoPackageReference.IncludeAssets) == '' AND %(_RhinoPackageReference.ExcludeAssets) == '' AND %(_RhinoPackageReference.PrivateAssets) == ''" />
+    </ItemGroup>
+    <PropertyGroup>
+      <!-- Property to specify if we're using PackageReference or packages.config -->
+      <_HasRhinoPackageReference Condition="'@(_RhinoPackageReference->Count())' &gt; 0">True</_HasRhinoPackageReference>
+      <_HasRhinoPackageReference Condition="$(_HasRhinoPackageReference) == ''">False</_HasRhinoPackageReference>
+      <!-- Detect if we should remove the rhino references from the output, which can be overridden. -->
+      <ShouldRemoveRhinoReferences Condition="$(ShouldRemoveRhinoReferences) == '' AND ( @(_RhinoPackageReferenceAssetsOverride->Count()) &gt; 0 OR $(_HasRhinoPackageReference) == 'False' )">True</ShouldRemoveRhinoReferences>
+
+    </PropertyGroup>
+    <ItemGroup Condition="$(ShouldRemoveRhinoReferences) == 'True' AND $(_HasRhinoPackageReference) == 'False'">
+      <!-- packages.config -->
+      <_RhinoReferencesToRemove Include="@(ReferenceCopyLocalPaths)" Condition="%(ReferenceCopyLocalPaths.FileName) == 'Eto'" />
+      <_RhinoReferencesToRemove Include="@(ReferenceCopyLocalPaths)" Condition="%(ReferenceCopyLocalPaths.FileName) == 'Rhino.UI'" />
+      <_RhinoReferencesToRemove Include="@(ReferenceCopyLocalPaths)" Condition="%(ReferenceCopyLocalPaths.FileName) == 'RhinoCommon'" />
+      <_RhinoReferencesToRemove Include="@(ReferenceCopyLocalPaths)" Condition="%(ReferenceCopyLocalPaths.FileName) == 'Newtonsoft.Json.Rhino'" />
+    </ItemGroup>
+    <ItemGroup Condition="$(ShouldRemoveRhinoReferences) == 'True' AND $(_HasRhinoPackageReference) == 'True'">
+      <!-- PackageReference -->
+      <_RhinoReferencesToRemove Include="@(ReferenceCopyLocalPaths)" Condition="%(ReferenceCopyLocalPaths.NuGetPackageId) == $(_RhinoPackageName)" />
+    </ItemGroup>
+    <ItemGroup Condition="$(ShouldRemoveRhinoReferences) == 'True'">
+      <!-- Remove assemblies from the output that come from this nuget package -->
+      <ReferenceCopyLocalPaths Remove="@(_RhinoReferencesToRemove)" />
+    </ItemGroup>
+
+    <!-- print a warning because this could all seem rather sneaky otherwise, at least when using packages.config -->
+    <Message Text="Preventing assemblies from being copied to the output directory, regardless of Copy Local property: @(_RhinoReferencesToRemove->'%(FileName)')" Condition="$(_HasRhinoPackageReference) == 'False'" />
+  </Target>
+  
+</Project>

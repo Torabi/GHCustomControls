@@ -14,6 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -70,17 +72,24 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GH_IO">
-      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Eto, Version=2.6.0.0, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\Eto.dll</HintPath>
     </Reference>
-    <Reference Include="Grasshopper, Version=7.13.21313.11001, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
-      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
+    <Reference Include="GH_IO, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
+      <HintPath>packages\Grasshopper.7.15.22039.13001\lib\net48\GH_IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Grasshopper, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
+      <HintPath>packages\Grasshopper.7.15.22039.13001\lib\net48\Grasshopper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Rhino.UI, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\Rhino.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="RhinoCommon, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\RhinoCommon.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -90,19 +99,18 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="RhinoCommon">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\System\rhinocommon.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Endoskeleton\packages\Package.1.0.0\lib\net48\WPFNumericUpDown.dll</HintPath>
+    <Reference Include="WPFNumericUpDown">
+      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Release\WPFNumericUpDown.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\DegreeSlider.cs" />
+    <Compile Include="GenericNumbers\DecimalNumber.cs" />
+    <Compile Include="GenericNumbers\DoubleNumber.cs" />
+    <Compile Include="GenericNumbers\GenericNumber.cs" />
+    <Compile Include="GenericNumbers\IntegerNumber.cs" />
     <Compile Include="GHCustomAttributes.cs" />
     <Compile Include="GHCustomComponent.cs" />
     <Compile Include="GHCustomControl.cs" />
@@ -177,4 +185,13 @@ Copy "$(TargetDir)$(ProjectName).dll" "C:\Program Files\Rhino $(Configuration.Su
     </StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  <Import Project="packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets" Condition="Exists('packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets'))" />
+    <Error Condition="!Exists('packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets'))" />
+  </Target>
+  <Import Project="packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets" Condition="Exists('packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets')" />
 </Project>

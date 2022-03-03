@@ -105,7 +105,7 @@ namespace GHCustomControls
             if (result.HasFlag(GHMouseEventResult.Handled))
                 return;
             
-            FloatNumber number = new FloatNumber((float)CurrentValue*100, _min*100, _max*100, (_max - _min) / 100, _decimals);
+            DecimalNumber number = new DecimalNumber((decimal)CurrentValue*100, (decimal)_min *100, (decimal)_max *100, (decimal)(_max - _min) / 100, _decimals);
             //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal( _min), Convert.ToDecimal(_max),FormatString);
             //if (numeric.GetInput(PointToScreen(sender, Pos), out decimal val))
             if (Helpers.GetFloatInput(PointToScreen(sender, Pos),number))

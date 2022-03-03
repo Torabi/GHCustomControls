@@ -53,34 +53,75 @@ namespace GHCustomControls
 
         internal void SetInteger(IntegerNumber number)
         {
-            IntegerNumericControl control = new IntegerNumericControl();
-            control.FontSize = 14;
-            control.DATA = number;
+            IntegerNumericControl control = new IntegerNumericControl()
+            {
+                FontSize = 14,
+                Minimum = number.Min,
+                Maximum = number.Max,
+                Inc = number.Inc,
+                Decimals = number.Decimals
+
+            };
+
+            Binding valueBinding = new Binding("Value") { Mode = BindingMode.TwoWay };
+            valueBinding.Source = number;
+            BindingOperations.SetBinding(control, IntegerNumericControl.DATAProperty, valueBinding);
+
             control.KeyDown += Control_KeyDown;
             this.PlaceHolder.Children.Add(control);
         }
-        internal void SetFloat(FloatNumber number)
+        internal void SetFloat(DecimalNumber number)
         {
-            FloatNumericControl control = new FloatNumericControl();
-            control.FontSize = 14;
-            control.DATA = number;
+            DecimalNumericControl control = new DecimalNumericControl()
+            {
+                FontSize = 14,
+                Minimum = number.Min,
+                Maximum = number.Max,
+                Inc = number.Inc,
+                Decimals = number.Decimals
+
+            };
+
+            Binding valueBinding = new Binding("Value") { Mode = BindingMode.TwoWay };
+            valueBinding.Source = number;
+            BindingOperations.SetBinding(control, DecimalNumericControl.DATAProperty, valueBinding);
             control.KeyDown += Control_KeyDown;
             this.PlaceHolder.Children.Add(control);
         }
         internal void SetDouble(DoubleNumber number)
         {
-            DoubleNumericControl control = new DoubleNumericControl();
-            control.FontSize = 14;
-            control.DATA = number;
+            DoubleNumericControl control = new DoubleNumericControl()
+            {
+                FontSize = 14,
+                Minimum = number.Min,
+                Maximum = number.Max,
+                Inc = number.Inc,
+                Decimals = number.Decimals
+                
+            };
+            
+            Binding valueBinding = new Binding("Value") { Mode = BindingMode.TwoWay };
+            valueBinding.Source =number;
+            BindingOperations.SetBinding(control, DoubleNumericControl.DATAProperty, valueBinding);
             control.KeyDown += Control_KeyDown;
             this.PlaceHolder.Children.Add(control);
         }
 
         internal void SetGeneric<T>(GenericNumber<T> number) where T : struct, IFormattable, IComparable<T>
         {
-            GenericNumericControl<T> control = new GenericNumericControl<T>();
-            control.FontSize =14;
-            control.DATA = number;
+            GenericNumericControl<T> control = new GenericNumericControl<T>()
+            {
+                FontSize = 14,
+                Minimum = number.Min,
+                Maximum = number.Max,
+                Inc = number.Inc,
+                Decimals = number.Decimals
+
+            };
+
+            Binding valueBinding = new Binding("Value") { Mode = BindingMode.TwoWay };
+            valueBinding.Source = number;
+            BindingOperations.SetBinding(control, GenericNumericControl<T>.DATAProperty, valueBinding);
             control.KeyDown += Control_KeyDown;
             control.Background = Brushes.LightYellow;
             this.PlaceHolder.Children.Add(control);

@@ -254,7 +254,7 @@ namespace GHCustomControls
             {
                 decimal d = Convert.ToDecimal(CurrentValue);
                 //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal(_min), Convert.ToDecimal(_max),"");
-                FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, 1, _decimals+2);
+                DecimalNumber number = new DecimalNumber((decimal)CurrentValue, (decimal)_min, (decimal)_max, 1, _decimals+2);
                 //if (numeric.GetInput(PointToScreen(sender, center), out decimal val))
                 if (Helpers.GetFloatInput(PointToScreen(sender, center),number))
                 {

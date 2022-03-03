@@ -67,7 +67,7 @@ namespace GHCustomControls
                 return;
             decimal d = Convert.ToDecimal(CurrentValue);
             //NumericUpDownData<decimal> numeric = new NumericUpDownData<decimal>(d, Convert.ToDecimal( _min),Convert.ToDecimal( _max),FormatString);
-            FloatNumber number = new FloatNumber((float)CurrentValue, _min, _max, (_max - _min) / 100, _decimals);
+            DecimalNumber number = new DecimalNumber(Convert.ToDecimal( CurrentValue), Convert.ToDecimal(_min), Convert.ToDecimal(_max), Convert.ToDecimal((_max - _min) / 100), _decimals);
             //if (numeric.GetInput(PointToScreen(sender,Pos), out decimal val))
             if (Helpers.GetFloatInput(PointToScreen(sender, Pos),number))
             {
