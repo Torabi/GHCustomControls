@@ -71,11 +71,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GH_IO">
-      <HintPath>..\..\..\..\Users\Ali\.nuget\packages\grasshopper\7.4.21078.1001\lib\net45\GH_IO.dll</HintPath>
+      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Grasshopper">
-      <HintPath>..\..\..\..\Users\Ali\.nuget\packages\grasshopper\7.4.21078.1001\lib\net45\Grasshopper.dll</HintPath>
+    <Reference Include="Grasshopper, Version=7.13.21313.11001, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files\Rhino $(Configuration.Substring(0,1))\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />

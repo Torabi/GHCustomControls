@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHCustomControls", "GHCustomControls.csproj", "{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		6 Debug|Any CPU = 6 Debug|Any CPU
+		6 Release|Any CPU = 6 Release|Any CPU
+		7 Debug|Any CPU = 7 Debug|Any CPU
+		7 Release|Any CPU = 7 Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.6 Debug|Any CPU.ActiveCfg = 6 Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.6 Debug|Any CPU.Build.0 = 6 Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.6 Release|Any CPU.ActiveCfg = 6 Release|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.6 Release|Any CPU.Build.0 = 6 Release|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.7 Debug|Any CPU.ActiveCfg = 7 Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.7 Debug|Any CPU.Build.0 = 7 Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.7 Release|Any CPU.ActiveCfg = 7 Release|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.7 Release|Any CPU.Build.0 = 7 Release|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78157D33-2F6E-4EF1-9DFB-BCAB51CDCBB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F274511E-CDE6-4293-BFA4-317ED24AB8B6}
+	EndGlobalSection
+EndGlobal
