@@ -132,7 +132,7 @@ namespace GHCustomControls
                 
                 timer.Stop();
                 changeVlaue();
-                Attributes.Owner.ExpireSolution(true);
+                Attributes?.Owner.ExpireSolution(true);
                 incerement = 0;
             }
         }
@@ -149,14 +149,14 @@ namespace GHCustomControls
                 
                 timer.Stop();
                 changeVlaue();
-                Attributes.Owner.ExpireSolution(true);
+                Attributes?.Owner.ExpireSolution(true);
                 incerement = 0;
             }
         }
         private void _label_OnValueChanged(object sender, ValueChangeEventArgumnet e)
         {
-
-            if (!Attributes.ContentBox.IsEmpty && (int)e.Value == 0) // on muse up
+           
+            if (Attributes!=null && !Attributes.ContentBox.IsEmpty && (int)e.Value == 0) // on muse up
             {
 
                 //T d = (T)CurrentValue;
@@ -167,7 +167,7 @@ namespace GHCustomControls
                 {
                     CurrentValue = number.Value;
                     _label.Text = AsString(CurrentValue);
-                    Attributes.Owner.ExpireSolution(true);
+                    Attributes?.Owner.ExpireSolution(true);
                 }
                 ////float s = GH_FontServer.MeasureString("A", SmallFont).Height * sender.Viewport.Zoom / 20;
                 //if (numeric.GetInput(PointToScreen(Grasshopper.Instances.ActiveCanvas, new PointF((_label.Bounds.Left + _label.Bounds.Right) / 2, _label.Bounds.Top)), out T val))

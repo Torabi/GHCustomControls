@@ -113,6 +113,7 @@
     <Compile Include="GenericNumbers\IntegerNumber.cs" />
     <Compile Include="GHCustomAttributes.cs" />
     <Compile Include="GHCustomComponent.cs" />
+    <Compile Include="GHCustomParameter.cs" />
     <Compile Include="GHCustomControl.cs" />
     <Compile Include="GHParameter.cs" />
     <Compile Include="Controls\Group.cs" />

@@ -105,27 +105,71 @@ namespace GHCustomControls
                 if (control is GHParameter)
                 {
                     GHParameter param = (GHParameter)control;
-                    switch (param.DataType)
+                    switch (param.Access)
                     {
-                        case GH_Types.gh_bool:
-                            writer.SetBoolean(name, (bool)param.CurrentValue);
+                        case GH_ParamAccess.item:
+                            switch (param.DataType)
+                            {
+                                case GH_Types.gh_bool:
+                                    writer.SetBoolean(name, (bool)param.CurrentValue);
+                                    break;
+                                case GH_Types.gh_double:
+                                    writer.SetDouble(name, (double)param.CurrentValue);
+                                    break;
+                                case GH_Types.gh_int32:
+                                    writer.SetInt32(name, (int)param.CurrentValue);
+                                    break;
+                                case GH_Types.gh_decimal:
+                                    writer.SetDecimal(name, Convert.ToDecimal(param.CurrentValue));
+                                    break;
+
+                                case GH_Types.gh_point2d:
+                                    writer.SetPoint2D(name, (GH_Point2D)param.CurrentValue);
+                                    break;
+                            }
                             break;
-                        case GH_Types.gh_double:
-                            writer.SetDouble(name, (double)param.CurrentValue);
-                            break;
-                        case GH_Types.gh_int32:
-                            writer.SetInt32(name, (int)param.CurrentValue);
-                            break;
-                        case GH_Types.gh_decimal:
-                            writer.SetDecimal(name, Convert.ToDecimal( param.CurrentValue));
+
+                        case GH_ParamAccess.list:
+                            switch (param.DataType)
+                            {
+                                case GH_Types.gh_bool:
+                                    writer.SetByteArray(name, ((bool[])param.CurrentValue).Select(i=> (byte)(i? 1:0)).ToArray());
+                                    break;
+                                case GH_Types.gh_double:
+                                    writer.SetDoubleArray(name, (double[])param.CurrentValue);
+                                    break;
+                                case GH_Types.gh_int32:
+                                    writer.SetDoubleArray(name, ((int[])param.CurrentValue).Cast<double>().ToArray());
+                                    break;
+                                case GH_Types.gh_decimal:
+                                    writer.SetDoubleArray(name, ((float[])param.CurrentValue).Cast<double>().ToArray());
+                                    break;
+                                case GH_Types.gh_point2d:
+                                    writer.SetDoubleArray(name, ((GH_Point2D[])param.CurrentValue).SelectMany(p => new double[] { p.x, p.y }).ToArray());
+                                    //writer.SetDoubleArray(name + ".y", ((GH_Point2D[])param.CurrentValue).Select(p => p.y).ToArray());
+                                    break ;
+                            }
                             break;
                     }
+                    
                 } 
                 if (control is IGHPanel)
                 {
                      
-                       
-                    writeCustomControls(writer, ((IGHPanel)control).Items,name);
+                    if (control is TabPanel tabPanel)
+                    {
+                        foreach(var kpv in tabPanel._tabs)
+                        {
+                            
+                                writeCustomControls(writer, kpv.Value,  name+"."+kpv.Key);
+                             
+                        }
+                    }
+                    else
+                    {
+                        writeCustomControls(writer, ((IGHPanel)control).Items,name);
+                    }
+                    
                 }
             }
         }
@@ -146,29 +190,81 @@ namespace GHCustomControls
                     if (reader.FindItem(name) == null)
                         continue;
                     GHParameter param = (GHParameter)control;
-                    switch (param.DataType)
+                    switch(param.Access)
                     {
-                        case GH_Types.gh_bool:
+                        case GH_ParamAccess.item:
+                            switch (param.DataType)
+                            {
+                                case GH_Types.gh_bool:
 
-                            param.CurrentValue = reader.GetBoolean(name);
+                                    param.CurrentValue = reader.GetBoolean(name);
+                                    break;
+                                case GH_Types.gh_double:
+                                    param.CurrentValue = reader.GetDouble(name);
+                                    break;
+                                case GH_Types.gh_int32:
+                                    param.CurrentValue = reader.GetInt32(name);
+                                    break;
+                                case GH_Types.gh_decimal:
+                                    param.CurrentValue = (float)reader.GetDecimal(name);
+                                    break;
+                                case GH_Types.gh_point2d:
+                                    param.CurrentValue = reader.GetPoint2D(name);
+                                    break;
+
+                            }
                             break;
-                        case GH_Types.gh_double:
-                            param.CurrentValue = reader.GetDouble(name);
-                            break;
-                        case GH_Types.gh_int32:
-                            param.CurrentValue = reader.GetInt32(name);
-                            break;
-                        case GH_Types.gh_decimal:
-                            param.CurrentValue = (float)reader.GetDecimal(name);
+                        case GH_ParamAccess.list:
+                            switch (param.DataType)
+                            {
+                                case GH_Types.gh_bool:
+
+                                    param.CurrentValue = reader.GetByteArray(name).Select(b=>b==1).ToArray();
+                                    break;
+                                case GH_Types.gh_double:
+                                    param.CurrentValue = reader.GetDoubleArray(name);
+                                    break;
+                                case GH_Types.gh_int32:
+                                    param.CurrentValue = reader.GetDoubleArray(name).Select(d=>(int)d).ToArray();
+                                    break;
+                                case GH_Types.gh_decimal:
+                                    param.CurrentValue =  reader.GetDoubleArray(name).Select(d => (float)d).ToArray();
+                                    break;
+                                case GH_Types.gh_point2d:
+
+                                    var values = reader.GetDoubleArray(name);
+                                    var points = new GH_Point2D[values.Length / 2];
+                                    for (int i = 0; i < values.Length; i += 2)
+                                        points[i/2] = new GH_Point2D(values[i], values[i + 1]);
+                                    param.CurrentValue = points;
+                                    break;
+
+                            }
                             break;
                     }
+                    
                     
 
                 }
 
                 if (control is IGHPanel)
                 {
-                    readCustomControls(reader, ((IGHPanel)control).Items, name);
+
+                    if (control is TabPanel tabPanel)
+                    {
+                        foreach (var kpv in tabPanel._tabs)
+                        {
+
+                            readCustomControls(reader, kpv.Value, name + "." + kpv.Key);
+
+                        }
+                    }
+                    else
+                    {
+                        readCustomControls(reader, ((IGHPanel)control).Items, name);
+                    }
+
+                    //readCustomControls(reader, ((IGHPanel)control).Items, name);
                 }
                 
             }

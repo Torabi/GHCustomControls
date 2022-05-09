@@ -31,9 +31,9 @@ namespace GHCustomControls
         /// value correspond to each tab
         /// </summary>
         List<int> _values;
-        public TabPanel(string name, string description, int activeTab, bool showTitle, bool showHeaderText=true, Bitmap toolTipDiagram = null) : base(name,description, activeTab,toolTipDiagram)
+        public TabPanel(string name, string description, int activeTab, bool showTitle, bool showHeaderText = true, Bitmap toolTipDiagram = null) : base(name, description, activeTab, toolTipDiagram)
         {
-           
+
             _tabs = new Dictionary<string, GHControl[]>();
             _icons = new Dictionary<string, Image>();
             _values = new List<int>();
@@ -45,14 +45,14 @@ namespace GHCustomControls
 
 
 
-        public void Add(string name,int value, params GHControl[] controls)
+        public void Add(string name, int value, params GHControl[] controls)
         {
             foreach (var control in controls)
                 control.Attributes = Attributes;
             _tabs.Add(name, controls);
-            _values.Add(value); 
+            _values.Add(value);
         }
-        public void Add(string name,int value,Image image16x16, params GHControl[] controls)
+        public void Add(string name, int value, Image image16x16, params GHControl[] controls)
         {
             foreach (var control in controls)
                 control.Attributes = Attributes;
@@ -87,7 +87,7 @@ namespace GHCustomControls
         /// <summary>
         /// the tab name - control array dictionary 
         /// </summary>
-        Dictionary<string, GHControl[]> _tabs;
+        internal Dictionary<string, GHControl[]> _tabs;
         /// <summary>
         /// the rectangles of the headers
         /// </summary>
@@ -133,15 +133,15 @@ namespace GHCustomControls
                     rec.Offset(shift, 0);
                 }
                 gradientBrush = new LinearGradientBrush(new PointF(rec.Left, rec.Top), new PointF(rec.Left, rec.Bottom), Color.AntiqueWhite, Color.Transparent);
-                _tabRec = new RectangleF(_bounds.Left + 2, _bounds.Top + down +Offset + _tabHeight, _bounds.Width - 4, _bounds.Height - down - 2 * Offset - _tabHeight - 4);
+                _tabRec = new RectangleF(_bounds.Left + 2, _bounds.Top + down + Offset + _tabHeight, _bounds.Width - 4, _bounds.Height - down - 2 * Offset - _tabHeight - 4);
 
-                this.SetChildrenBounds(0,_tabHeight+ (_showTitle?_titleHeight:0)+2);
+                this.SetChildrenBounds(0, _tabHeight + (_showTitle ? _titleHeight : 0) + 2);
             }
         }
-    
+
 
         public override int Offset => 4;
-      
+
         int _titleHeight;
 
         public GHControl[] Items
@@ -167,8 +167,14 @@ namespace GHCustomControls
             get => _orientation;
             set { _orientation = value; }
         }
-   
 
+        internal override void SetAttribute(GHCustomAttributes att)
+        {
+            Attributes = att;
+            var allControls = _tabs.Values.SelectMany(c=>c);
+            foreach (var control in allControls)
+                control.SetAttribute(att);
+        }
 
 
         /// <summary>
@@ -178,7 +184,7 @@ namespace GHCustomControls
         internal override int GetHeight()
         {
             int titleHeight = (_showTitle) ? _titleHeight : 0;
-            return _tabHeight + titleHeight +this.GetChildrenHeight(Items) + 2 * Offset;
+            return _tabHeight + titleHeight + this.GetChildrenHeight(Items) + 2 * Offset;
 
         }
 
@@ -187,10 +193,10 @@ namespace GHCustomControls
             // find the total tab width by summing up all the tab names 
 
             int w1 = _tabs.Keys.Aggregate(
-                Offset, (int w, string key) => 
-                w  
-                + (_showHeaderText?GH_FontServer.StringWidth(key, SmallFont):0) 
-                + (_icons.ContainsKey(key)&&_icons[key]!=null? 18:0) + Offset
+                Offset, (int w, string key) =>
+                w
+                + (_showHeaderText ? GH_FontServer.StringWidth(key, SmallFont) : 0)
+                + (_icons.ContainsKey(key) && _icons[key] != null ? 18 : 0) + Offset
                 );
 
             // now we find the tab maximum tab size
@@ -202,7 +208,7 @@ namespace GHCustomControls
         #region Mouse events
         internal override void MouseLeftClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result)
         {
-           
+
             // firts check if one of the headers has been clicked 
             for (int i = 0; i < _headers.Count; i++)
             {
@@ -210,7 +216,7 @@ namespace GHCustomControls
                 if (rec.Contains(e.CanvasLocation))
                 {
                     // now check if this is selected header?
-                    if ((int)CurrentValue == i)
+                    if ((int)CurrentValue == _values[i])
                         return; // nothing happens
                     // another tab is selected , we switch the tab 
                     CurrentValue = _values[i];
@@ -275,25 +281,25 @@ namespace GHCustomControls
 
         internal override void SetupToolTip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)
         {
-           
+
             if (this.SetChildrenToolTip(canvasPoint, e))
                 return;
-            
+
             int i = _headers.FindIndex(rec => rec.Contains(canvasPoint));
             if (i == -1)
             {
-                base.SetupToolTip(canvasPoint,e);
+                base.SetupToolTip(canvasPoint, e);
             }
             else
             {
                 e.Title = _tabs.ToArray()[i].Key;
                 //e.Text = Description;
             }
-            
-        }
-        
 
-        
+        }
+
+
+
         private PointF[] headerShape(RectangleF rec)
         {
             return new PointF[]
@@ -307,10 +313,10 @@ namespace GHCustomControls
 
             };
         }
-        internal override void Render(Graphics graphics,PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
+        internal override void Render(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden)
         {
             // render the frame
-            Helpers.DrawFrame(Bounds, graphics, (_showTitle)?Name:"", selected, !Enabled, hidden);
+            Helpers.DrawFrame(Bounds, graphics, (_showTitle) ? Name : "", selected, !Enabled, hidden);
             // render the headers,
             int selectedTab = _values.IndexOf((int)CurrentValue);
             for (int i = 0; i < _headers.Count; i++)
@@ -362,7 +368,7 @@ namespace GHCustomControls
                             {
 
                                 graphics.DrawString(
-                                tabName, SmallFont, this.ActiveBrush(), _headers[i].Left+1+icon.Width,_headers[i].Top, s
+                                tabName, SmallFont, this.ActiveBrush(), _headers[i].Left + 1 + icon.Width, _headers[i].Top, s
                                 );
                             }
                         }
@@ -375,9 +381,12 @@ namespace GHCustomControls
             // now draw the border 
             //int selectedTab = (int)CurrentValue;
             //RectangleF rect = new RectangleF(Bounds.Left + 2, Bounds.Top + _fontSize + _tabHeight, Bounds.Width - 4, Bounds.Height - _fontSize - _tabHeight - 2);
-            RectangleF header = _headers[selectedTab];
-            PointF[] tabPoly = new PointF[]
-                {
+            Image slectedicon = null;
+            if (selectedTab > -1)
+            {
+                RectangleF header = _headers[selectedTab];
+                PointF[] tabPoly = new PointF[]
+                    {
                     new PointF(_tabRec.Left,_tabRec.Top),
                     new PointF(header.Left,header.Bottom),
                     new PointF(header.Left+2,header.Top),
@@ -387,45 +396,45 @@ namespace GHCustomControls
                     new PointF(_tabRec.Right,_tabRec.Bottom+2),
                     new PointF(_tabRec.Left,_tabRec.Bottom+2),
                     new PointF(_tabRec.Left,_tabRec.Top)
-                };
-            graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, Color.Gray)), tabPoly);
-            graphics.DrawPolygon(new Pen(Brushes.Black, (Enabled)?2:1), tabPoly);
-            //// draw the active tab 
-            //int selectedTab = (int)CurrentValue;
-            //GH_Capsule capsule2 = GH_Capsule.CreateCapsule(_headers[selectedTab], GH_Palette.Transparent, 2, 0);
-            //capsule2.Render(graphics, new GH_PaletteStyle((Highlighted == selectedTab) ? Color.LightGoldenrodYellow : Color.Transparent, Color.Black));
-            //capsule2.Dispose();
-            // draw the text 
-            string selectedTabName = _tabs.Keys.ToArray()[selectedTab];
-            Image slectedicon = _icons.ContainsKey(selectedTabName) ? _icons[selectedTabName] : null;
-            if (slectedicon != null)
-            {
-                graphics.DrawImage(slectedicon, _headers[selectedTab].Left + 1, _headers[selectedTab].Top + 1);
-            }
-            if (_showHeaderText)
-            {
-                using (Font f = new Font(SmallFont, FontStyle.Bold))
-                {
-                    if (slectedicon == null)
-                    {
+                    };
 
-                        using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Center })
-                            graphics.DrawString(
-                                selectedTabName, f, this.ActiveBrush(), _headers[selectedTab], s);
-                    }
-                    else
+                graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, Color.Gray)), tabPoly);
+                graphics.DrawPolygon(new Pen(Brushes.Black, (Enabled) ? 2 : 1), tabPoly);
+
+
+                // draw the text 
+                string selectedTabName = _tabs.Keys.ToArray()[selectedTab];
+                slectedicon = _icons.ContainsKey(selectedTabName) ? _icons[selectedTabName] : null;
+                if (slectedicon != null)
+                {
+                    graphics.DrawImage(slectedicon, _headers[selectedTab].Left + 1, _headers[selectedTab].Top + 1);
+                }
+
+                if (_showHeaderText)
+                {
+                    using (Font f = new Font(SmallFont, FontStyle.Bold))
                     {
-                        
-                        using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Near })
-                            graphics.DrawString(
-                                selectedTabName, f, this.ActiveBrush(), _headers[selectedTab].Left+1+ slectedicon.Width, _headers[selectedTab].Top, s);
+                        if (slectedicon == null)
+                        {
+
+                            using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Center })
+                                graphics.DrawString(
+                                    selectedTabName, f, this.ActiveBrush(), _headers[selectedTab], s);
+                        }
+                        else
+                        {
+
+                            using (StringFormat s = new StringFormat() { Alignment = StringAlignment.Near })
+                                graphics.DrawString(
+                                    selectedTabName, f, this.ActiveBrush(), _headers[selectedTab].Left + 1 + slectedicon.Width, _headers[selectedTab].Top, s);
+                        }
                     }
                 }
             }
             // draw the items 
             foreach (GHControl control in Items)
                 if (control.IsVisible)
-                control.Render(graphics, cursorCanvasPosition, selected, !Enabled, hidden);
+                    control.Render(graphics, cursorCanvasPosition, selected, !Enabled, hidden);
         }
 
 

@@ -47,8 +47,9 @@ namespace GHCustomControls
             get => _currentValue;
             set {
                 _currentValue = value;
-                OnValueChanged?.Invoke(this,new ValueChangeEventArgumnet(_currentValue,DataType,Access));
-                }
+                //if (Attributes!= null)
+                    OnValueChanged?.Invoke(this,new ValueChangeEventArgumnet(_currentValue,DataType,Access));
+            }
         }
 
         public event EventHandler<ValueChangeEventArgumnet> OnValueChanged;

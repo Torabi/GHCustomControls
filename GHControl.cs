@@ -222,9 +222,10 @@ namespace GHCustomControls
         /// set the attribute of this control and all its children 
         /// </summary>
         /// <param name="att"></param>
-        internal void SetAttribute(GHCustomAttributes att)
+        internal virtual void SetAttribute(GHCustomAttributes att)
         {
-            Attributes = (GHCustomAttributes)att;
+            Attributes = att;
+            
             if (this is IGHPanel)
             {
                 IGHPanel panel = (IGHPanel)this;

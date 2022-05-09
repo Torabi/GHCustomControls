@@ -52,7 +52,7 @@ namespace GHCustomControls
 
         public override void UpdatePos()
         {
-           X = GetPos((float)CurrentValue);
+           X = GetPos(Convert.ToSingle( CurrentValue));
         }
 
         public override void UpdateValue()

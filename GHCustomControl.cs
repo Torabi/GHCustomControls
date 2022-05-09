@@ -60,13 +60,6 @@ namespace GHCustomControls
             OnRender(graphics, cursorCanvasPosition, selected, locked, hidden);
         }
 
-        //internal override void SetupToolTip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)
-        //{
-        //    e.Title = Name;
-        //    //e.Description = Description;
-        //    e.Text = Description;
-        //}
-
         public abstract void OnMouseClick(GH_Canvas sender, GHCustomComponent customComponent, GH_CanvasMouseEvent e, ref GHMouseEventResult result);
 
         public abstract void OnRender(Graphics graphics, PointF cursorCanvasPosition, bool selected, bool locked, bool hidden);
