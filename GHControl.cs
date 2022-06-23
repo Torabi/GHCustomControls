@@ -258,7 +258,7 @@ namespace GHCustomControls
         {
 
            if (!Bounds.IsEmpty)
-                Grasshopper.Instances.ActiveCanvas.Invalidate(Rectangle.Round( Bounds));
+                Grasshopper.Instances.ActiveCanvas?.Invalidate(Rectangle.Round( Bounds));
             //if (this is IGHPanel)
             //{
             //    IGHPanel panel = (IGHPanel)this;
@@ -271,7 +271,7 @@ namespace GHCustomControls
         /// </summary>
         public void ForceRedraw()
         {
-            Grasshopper.Instances.ActiveCanvas.ScheduleRegen(100);
+            Grasshopper.Instances.ActiveCanvas?.ScheduleRegen(100);
         }
 
         

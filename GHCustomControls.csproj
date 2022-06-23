@@ -100,8 +100,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WPFNumericUpDown">
-      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Release\WPFNumericUpDown.dll</HintPath>
+    <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -174,8 +175,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>
-Copy "$(TargetDir)$(ProjectName).dll" "C:\Program Files\Rhino $(Configuration.SubString(0,1))\Plug-ins\Grasshopper\Components"
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
