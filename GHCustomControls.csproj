@@ -73,22 +73,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Eto, Version=2.6.0.0, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\Eto.dll</HintPath>
+      <HintPath>..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\lib\net48\Eto.dll</HintPath>
     </Reference>
-    <Reference Include="GH_IO, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
-      <HintPath>packages\Grasshopper.7.15.22039.13001\lib\net48\GH_IO.dll</HintPath>
+    <Reference Include="GH_IO, Version=7.18.22124.3001, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
+      <HintPath>..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\lib\net48\GH_IO.dll</HintPath>
     </Reference>
-    <Reference Include="Grasshopper, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
-      <HintPath>packages\Grasshopper.7.15.22039.13001\lib\net48\Grasshopper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Grasshopper, Version=7.18.22124.3001, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
+      <HintPath>..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\lib\net48\Grasshopper.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Rhino.UI, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\Rhino.UI.dll</HintPath>
+    <Reference Include="Rhino.UI, Version=7.18.22124.3001, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\lib\net48\Rhino.UI.dll</HintPath>
     </Reference>
-    <Reference Include="RhinoCommon, Version=7.15.22039.13000, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>packages\RhinoCommon.7.15.22039.13001\lib\net48\RhinoCommon.dll</HintPath>
+    <Reference Include="RhinoCommon, Version=7.18.22124.3001, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\lib\net48\RhinoCommon.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,8 +99,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WPFNumericUpDown">
-      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Release\WPFNumericUpDown.dll</HintPath>
+    <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -174,8 +174,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>
-Copy "$(TargetDir)$(ProjectName).dll" "C:\Program Files\Rhino $(Configuration.SubString(0,1))\Plug-ins\Grasshopper\Components"
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
@@ -193,6 +192,10 @@ Copy "$(TargetDir)$(ProjectName).dll" "C:\Program Files\Rhino $(Configuration.Su
     </PropertyGroup>
     <Error Condition="!Exists('packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\RhinoCommon.7.15.22039.13001\build\RhinoCommon.targets'))" />
     <Error Condition="!Exists('packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets'))" />
+    <Error Condition="!Exists('..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\build\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\build\RhinoCommon.targets'))" />
+    <Error Condition="!Exists('..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\build\Grasshopper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\build\Grasshopper.targets'))" />
   </Target>
   <Import Project="packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets" Condition="Exists('packages\Grasshopper.7.15.22039.13001\build\Grasshopper.targets')" />
+  <Import Project="..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\build\RhinoCommon.targets" Condition="Exists('..\Endoskeleton\packages\RhinoCommon.7.18.22124.3001\build\RhinoCommon.targets')" />
+  <Import Project="..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\build\Grasshopper.targets" Condition="Exists('..\Endoskeleton\packages\Grasshopper.7.18.22124.3001\build\Grasshopper.targets')" />
 </Project>
