@@ -101,7 +101,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
+ 
+      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
+ 
     </Reference>
   </ItemGroup>
   <ItemGroup>
