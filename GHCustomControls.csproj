@@ -99,11 +99,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WPFNumericUpDown, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
- 
-      <HintPath>..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
- 
+    <Reference Include="WPFNumericUpDown">
+      <HintPath>..\..\WPFNumericUpDown\WPFNumericUpDown\bin\Debug\WPFNumericUpDown.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +131,10 @@
     <None Include="NumericUpDownData.cs" />
     <Compile Include="Controls\PictureFrame.cs" />
     <Compile Include="Controls\ProgressBar.cs" />
+    <Compile Include="LoginViewModel.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,6 +153,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NumericUpDownWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,8 +180,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>XCopy $(TargetPath) C:\ParametricZoo\Packages /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>

@@ -1,0 +1,62 @@
+﻿<Window x:Class="GHCustomControls.LoginWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GHCustomControls"
+             mc:Ignorable="d" d:DesignWidth="321"
+            Title="Login" ResizeMode="NoResize" Topmost="True"
+            Height= "167" Width="320"
+            >
+    <Window.DataContext>
+        <local:LoginViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <local:StatusBrushConcerter x:Key="statusConv"/>
+            <local:BoolBrushConcerter x:Key="boolConv"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="User name : " HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            <Border Background="Transparent" Grid.Column="1" Width="200" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{Binding Path=IsValidEmail, Converter={StaticResource boolConv}}" HorizontalAlignment="Left" >
+                <TextBox Grid.Column="1" Height="22" Text="{Binding Path=UserName}"  VerticalAlignment="Center" IsEnabled="True" HorizontalAlignment="Stretch"/>
+            </Border>
+            <Label Grid.Row="1" Content="Password : " HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <Border Grid.Row="1" Grid.Column="1"  Width="200" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" >
+                <PasswordBox Name="passwordBox" Height="22" VerticalAlignment="Center" PasswordChar="*"  />
+            </Border>
+            <Label Grid.Row="2" Grid.ColumnSpan="2" VerticalContentAlignment="Center">
+                <Hyperlink NavigateUri="https://parametriczoo.com/license_manager/ResetPassWord/Request/email/" >
+                Forgot your password?
+                </Hyperlink>
+
+            </Label>
+        </Grid>
+
+        <DockPanel Grid.Row="2" VerticalAlignment="Bottom">
+            <Button Height="25" HorizontalAlignment="Stretch" DockPanel.Dock="Right" Margin="4"
+                    Content="{Binding Path=Message, Mode=TwoWay}"  
+                    Background="{Binding Path=Status, Converter={StaticResource statusConv}}"
+                    Command="{Binding LoginCommand}"
+                    ToolTip="{Binding Path=Message}"
+                    IsEnabled="{Binding Path=Status, Converter={StaticResource statusConv}}"
+                    />
+            <!--<Button IsCancel="True" Content="Cancel" Width="60" Height="25" HorizontalAlignment="Left" DockPanel.Dock="Left"/>-->
+        </DockPanel>
+    </Grid>
+</Window>
